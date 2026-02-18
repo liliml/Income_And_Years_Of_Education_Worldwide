@@ -4,7 +4,7 @@ Group 3: Lilian Law, Nina Jiang, Yijia Liu
 ---
 
 ## **Overview of Project:**
-For our final project we are planning to make an interactive web map that explores the relationship between education and income across different countries in the world (the scope of this map is worldwide and focuses on data per country). We want to visualize how average years of schooling correlate with average annual wages, and use the map to highlight broad global patterns as well as regional differences. 
+For our final project we are planning to make an interactive web map that explores the relationship between education and income across different countries in the world (the scope of this map is worldwide and focuses on data per country). We want to visualize how average years of schooling correlate with average annual wages, and use the map to highlight broad global patterns as well as regional differences. This project uses template code and inspiration from lab 6 and 7 of geog 458 coursework. 
 
 ## **Maps:**
 The idea is to make these connections easy to see by using three maps, each being able to be viewed with a checkbox system. The first map will be a choropleth map showing both education and income data for the countries for that year with the ability to hover over a country to view data about the income and average amount of years of schooling for that year in that country and also include a slider to select a year to show data from.
