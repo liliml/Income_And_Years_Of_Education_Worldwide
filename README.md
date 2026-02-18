@@ -3,10 +3,10 @@ Group 3: Lilian Law, Nina Jiang, Yijia Liu
 
 ---
 
-## **Overview of Project Idea:**
+## **Overview of Project:**
 For our final project we are planning to make an interactive web map that explores the relationship between education and income across different countries in the world (the scope of this map is worldwide and focuses on data per country). We want to visualize how average years of schooling correlate with average annual wages, and use the map to highlight broad global patterns as well as regional differences. 
 
-## **Map Ideas:**
+## **Maps:**
 The idea is to make these connections easy to see by using three maps, each being able to be viewed with a checkbox system. The first map will be a choropleth map showing both education and income data for the countries for that year with the ability to hover over a country to view data about the income and average amount of years of schooling for that year in that country and also include a slider to select a year to show data from.
 
 The second and third maps will be of two choropleth layers, one map being for education and the other map being for income. Both maps will allow users to hover over individual countries to view pop‑ups with key statistics (with checkboxes in a menu to select what data aka columns from the data such as years of education to show in the pop up), such as the annual average wages or years of education, and short explanations. There also will be an included slider to select a year to show data from. 
@@ -34,5 +34,6 @@ This project visualizes global years of schooling by level of education and gend
 
 ![Income map](/img/income.png)
 This project shows the Adjusted net national income per capita (current US$), also with time slider and pop-ups when hovering to a country.
+
 
 
