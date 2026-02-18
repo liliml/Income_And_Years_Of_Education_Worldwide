@@ -35,5 +35,8 @@ This project visualizes global years of schooling by level of education and gend
 ![Income map](/img/income.png)
 This project shows the Adjusted net national income per capita (current US$), also with time slider and pop-ups when hovering to a country.
 
-
+## Prototype Visual:
+![project prototype img1](/img/prototype1.png)
+![project prototype img2](/img/prototype2.png)
+![project prototype img3](/img/prototype3.png)
 
