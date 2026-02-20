@@ -2,14 +2,20 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <meta name="description" content="GeoNarrative Template" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 
+    <title>Income and Education</title>
+
+    <link rel="stylesheet" c href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap"/>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="https://unpkg.com/scrollama"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
     
 </head>
 <body>
@@ -66,20 +72,104 @@
         </div>
 
         <article class="scene" data-scene="0">
-        </article>
-        <article class="scene" data-scene="1">
-        </article>
-        <article class="scene" data-scene="2">
-        </article>
-        ... ... ... ...
-        <article class="scene" data-scene="n">
+            <h2>STEP 1: Loading Polygons</h2>
         </article>
 
+        <article class="scene" data-scene="1">
+            <h2>STEP 2: Loading Points</h2>
+        </article>
+        
+        <article class="scene" data-scene="2">
+            <h2>STEP 3: Relocate to Place A (Seattle)</h2>
+        </article>
+        
+        <article class="scene" data-scene="3">
+            <h2>STEP 4: Relocate to Place B (Portland)</h2>
+        </article>
+        
+        <article class="scene" data-scene="4">
+            <h2>STEP 5: Text Script</h2>
+            <p>This section shows where active research is happening, and on what topics to communicate on-going nature of
+                scientific learning. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                Aenean massa.
+                Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
+                ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla
+                vel, aliquet nec,
+                vulputate eget, arcu. In enim justo, rhoncus ut, imperdet a, venenatis vitae, justo. Nullam dictum felis eu pede
+                mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate.
+            </p>
+            <hr>
+            <div>
+                <!-- loading bootstrap icons -->
+                <p><i class="bi bi-person"></i> <span>2,823</span>
+                </p>
+                <p><i class="bi bi-map"></i> <span>3,520</span>
+                </p>
+            </div>
+        </article>
+        
+        <article class="scene" data-scene="5">
+            <h2>STEP 6: Image </h2>
+            <img src="img/portland.jpg"></img>
+            </article>
+            <article class="scene fullscreen" data-scene="6">
+            <h2>STEP 7: Ending Page</h2>
+        </article>
     </section>
 
     <section id="footer">
-    </section>
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <h6>About</h6>
+                        <p class="text-justify"> GeoNarrative, also being referred to as storymap, or map-based storytelling, is an visualization genre that primarily utilizes a series of maps or other types of geovisualizations to narrate a geographical event or phenomenon. In addition to geovisualization, there will be other form of information like scripts, images, or videos. </p>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <h6>Categories</h6>
+                        <ul class="footer-links">
+                        <li><a href="http://hgis.uw.edu/category/c-language/">StoryMap</a></li>
+                        <li><a href="http://hgis.uw.edu/category/front-end-development/">Map Design</a></li>
+                        <li><a href="http://hgis.uw.edu/category/back-end-development/">Cartography</a></li>
+                        <li><a href="http://hgis.uw.edu/category/java-programming-language/">Web Mapping</a></li>
+                        <li><a href="http://hgis.uw.edu/category/android/">Advanced Digital Geographies</a></li>
+                        <li><a href="http://hgis.uw.edu/category/templates/">Templates</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <h6>Quick Links</h6>
+                        <ul class="footer-links">
+                        <li><a href="http://hgis.uw.edu/about/">About Us</a></li>
+                        <li><a href="http://hgis.uw.edu/contact/">Contact Us</a></li>
+                        <li><a href="http://hgis.uw.edu/contribute-at-scanfcode/">Contribute</a></li>
+                        <li><a href="http://hgis.uw.edu/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="http://hgis.uw.edu/sitemap/">Sitemap</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+            </div>
 
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                        <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by
+                            <a href="#">Humanistic GIS Lab</a>.
+                        </p>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <ul class="social-icons">
+                            <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
     <script src="./js/main.js"></script>
 </body>
 </html>
