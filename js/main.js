@@ -1,7 +1,8 @@
 // CODE HERE
 
 // 1. Declare the maps, script panels, and different thematic layers.
-let map, scriptPanel = scrollama(), countiesLayer, cellTowersLayer;
+// ORGINAL: let map, scriptPanel = scrollama(), countiesLayer, cellTowersLayer;
+let scriptPanel = scrollama();
 
 // 2. Initialize the layout.
 history.scrollRestoration = "manual"; // make sure the geo-narrative will be scrolled to the cover page even after a page refresh.
@@ -13,7 +14,7 @@ window.addEventListener("resize", adjustStoryboardlSize); // ask the browser win
 function adjustStoryboardlSize() {
 
     const scenes = document.getElementsByClassName("scene");
-    const storyboard = document.getElementById("storyboard");
+    //AM NOT USING STORYBOARD SECTION OR ID SO COMMENTED THIS OUT!: const storyboard = document.getElementById("storyboard");
 
     // 3.1 determine the height of each scene element
     let sceneH = Math.floor(window.innerHeight * 0.75);
@@ -21,6 +22,7 @@ function adjustStoryboardlSize() {
         scene.style.height = sceneH + "px";
     }
     
+    //NOTE: THIS HAS TO BE COMMENTED OUT OR THE MAP WILL NOT SHOW!!!! 
     // 3.2 determin the height of the storyboard.
     let storyboardHeight = window.innerHeight;
     let storyboardMarginTop = (window.innerHeight - storyboardHeight) / 2;
@@ -32,173 +34,280 @@ function adjustStoryboardlSize() {
     scriptPanel.resize();
 }
 
-// 4. Initialize the mapbox
-mapboxgl.accessToken = '.....'; // Assign the access token
+// assign the access token
+mapboxgl.accessToken = 'pk.eyJ1IjoieWowNTA1IiwiYSI6ImNtaGVhZm13NzBiZHAyaXBwNnVia3kyY3YifQ.JDOB2t61C-q1Qo7WLT7DDw';
 
-map = new mapboxgl.Map({
+
+// declare the map object
+let map = new mapboxgl.Map({
     container: 'map', // container ID
-    style: 'mapbox://styles/mapbox/light-v10',
-    zoom: 7, // starting zoom
-    minZoom: 3,
-    maxZoom: 10,
-    center: [-121.93, 47.33], // starting center
+    style: 'mapbox://styles/mapbox/dark-v10',
+    zoom: 1.2, // starting zoom
     scrollZoom: false,
-    boxZoom: false,
-    doubleClickZoom: false
-});  // Declare the map object
+    minZoom: 1,
+    center: [0, 20] // starting center
+});
 
-// 5. define the asynchronous function to load geojson data and then performs the dependent actions.
-async function geojsonFetch() {
+// declare the coordinated chart as well as other variables.
+let chart = null;
+    activeLayer = "income";
+    worldData = null;
 
-    // 6 wait till the data of washington counties and celltowers are fully loaded.
-    let response, counties, celltowers;
-    response = await fetch("assets/wacountydata.geojson");
-    counties = await response.json();
-    response = await fetch("assets/celltowers.geojson");
-    celltowers = await response.json();
+// create a few constant variables.
+const incomeBreaks = [0, 2000, 5000, 10000, 20000, 40000];
+const incomeColors = ['#f2f0f7','#cbc9e2','#9e9ac8','#756bb1','#54278f','#3f007d'];
 
-    // 7. Trigger operations inside of the the ()=> {} funciton while loading the map.
-    map.on('load', () => {
-        // 8. add map source and declare layers.
-        map.addSource('celltowers-src', {
-            type: 'geojson',
-            data: celltowers
+const schoolingBreaks = [0, 3, 6, 9, 12];
+const schoolingColors = ['#edf8fb','#b2e2e2','#66c2a4','#2ca25f','#006d2c'];
+
+// create the legend object and anchor it to the html element with id legend.
+const legend = document.getElementById('legend');
+
+function updateLegend(type) {
+    let breaks = type === "income" ? incomeBreaks : schoolingBreaks;
+    let colors = type === "income" ? incomeColors : schoolingColors;
+
+    let labels = [`<strong>${type === "income" ? "Avg Yearly Income (USD)" : "Avg Years Schooling"}</strong>`];
+
+    for (let i = 0; i < breaks.length - 1; i++) {
+        labels.push(`
+            <p class="break">
+                <span class="dot" style="background:${colors[i]}; width:18px; height:18px;"></span>
+                <span class="dot-label">${breaks[i]} – ${breaks[i+1]}</span>
+            </p>
+        `);
+    }
+
+    legend.innerHTML = labels.join('');
+}
+
+function clean(v) {
+    return v === -1 ? null : v;
+}
+
+async function loadData() {
+    let response = await fetch("assets/2000/merged_2000.geojson");
+    worldData = await response.json();
+
+    map.on("load", () => {
+
+        map.addSource("world", {
+            type: "geojson",
+            data: worldData
         });
 
-        map.addSource('counties-src', {
-            type: 'geojson',
-            data: counties
+        // Income choropleth
+        map.addLayer({
+            id: "income-layer",
+            type: "fill",
+            source: "world",
+            paint: {
+            "fill-color": [
+                "case",
+                ["==", ["get", "INCOME"], -1], '#999999',
+                [
+                    "step",
+                    ["get", "INCOME"],
+                    incomeColors[0], incomeBreaks[1],
+                    incomeColors[1], incomeBreaks[2],
+                    incomeColors[2], incomeBreaks[3],
+                    incomeColors[3], incomeBreaks[4],
+                    incomeColors[4], incomeBreaks[5],
+                    incomeColors[5]
+                ]
+            ],
+                "fill-opacity": 0.8,
+                "fill-outline-color": "#222"
+            }
         });
 
-        countiesLayer = {
-            'id': 'counties-polygons',
-            'type': 'fill',
-            'source': 'counties-src',
-            'minzoom': 5,
-            'paint': {
-            'fill-color': '#0080ff',
-            'fill-opacity': 0.5
-            }
-        };
 
-        cellTowersLayer = {
-            'id': 'celltowers-points',
-            'type': 'circle',
-            'source': 'celltowers-src',
-            'minzoom': 5,
-            'paint': {
-            'circle-color': 'red',
-            'circle-radius': 4,
-            'circle-opacity': 0.8,
-            }
-        };
-
-        // 9. Initialize the script panel
-        scriptPanel
-            .setup({
-            step: ".scene", // all the scenes.
-            offset: 0.33, // the location of the enter and exit trigger
-            debug: false // toggler on or off the debug mode.
-            })
-            .onStepEnter(handleSceneEnter)
-            .onStepExit(handleSceneExit);
         
-        // 10. This function performs when a scene enters the storyboard
-        function handleSceneEnter(response) {
-            var index = response.index; // capture the id of the current scene. 
-            if (index === 0) { // When enter the first scene
-                map.flyTo({
-                    center: [-121.93, 47.33],
-                    zoom: 8,
-                    pitch: 0,
-                    speed: 0.5
-                }); // fly to a new location
-                
-                if (typeof (map.getSource('counties-src')) == 'undefined') { //if the map source 'counties-src' does not exist
-                    map.addSource('counties-src', {
-                        type: 'geojson',
-                        data: counties
-                    }); // reload the map source of 'counties-src'
-                } else {
-                    map.getSource('counties-src').setData(counties); // if the map source does not exist, relaod the data counties to the pre-defined map source 'counties-src'.
-                }
+        // Schooling choropleth
+        map.addLayer({
+            id: "schooling-layer",
+            type: "fill",
+            source: "world",
+            layout: { visibility: "none" },
+            paint: {
+            "fill-color": [
+                "case",
+                ["==", ["get", "AVG_YR_SCH"], -1], "#999999",
 
-                if (!map.getLayer("counties-polygons")) { // if the map layer 'counties-polygons' does not exit
-                    map.addLayer(countiesLayer);
-                }
-                document.getElementById("cover").style.visibility = "hidden"; // Hide the cover page
-            } else if (index === 1) { // When enter the second scene.
-                map.flyTo({
-                center: [-121.93, 47.33],
-                zoom: 8,
-                pitch: 60,
-                speed: 0.5
-
-                });
-                if (typeof (map.getSource('celltowers-src')) == 'undefined') {
-                    map.addSource('celltowers-src', {
-                        type: 'geojson',
-                        data: celltowers
-                    });
-                } else {
-                    map.getSource('celltowers-src').setData(celltowers);
-                }
-
-                if (!map.getLayer("celltowers-points")) {
-                    map.addLayer(cellTowersLayer);
-                }
-            } else if (index === 2) {
-                //Relocate to Seattle
-                map.flyTo({
-                    center: [-122.4121036, 47.6131229],
-                    zoom: 12,
-                    pitch: 0,
-                    speed: 0.5
-                });
-            } else if (index === 3) {
-                //Relocate to Portland
-                map.flyTo({
-                    center: [-122.724366, 45.5428119],
-                    zoom: 12,
-                    pitch: 60,
-                    speed: 0.5
-
-                });
-                map.setStyle('mapbox://styles/mapbox/satellite-streets-v10'); // change the base map
-            } else if (index === 6) {
-                map.flyTo({
-                    center: [-122.4121036, 47.6131229],
-                    zoom: 12,
-                    pitch: 0,
-                    speed: 0.5
-                });
+                [
+                    "step",
+                    ["get", "AVG_YR_SCH"],
+                    schoolingColors[0], schoolingBreaks[1],
+                    schoolingColors[1], schoolingBreaks[2],
+                    schoolingColors[2], schoolingBreaks[3],
+                    schoolingColors[3], schoolingBreaks[4],
+                    schoolingColors[4]
+                ]
+            ],
+                "fill-opacity": 0.8,
+                "fill-outline-color": "#222"
             }
-        }
+        });
 
-        // 11. This function performs when a scene exists the storyboard
-        function handleSceneExit(response) {
-            var index = response.index;
+        updateLegend("income");
+    });
 
-            if (index === 0) {
-                if (map.getLayer("counties-polygons")) {
-                map.removeLayer('counties-polygons');
-                }
-                if (response.direction == 'down') { 
-                document.getElementById("cover").style.visibility = "hidden"; // when you scroll down, the cover page will be hided.
-                } else {
-                document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
-                }
-            } else if (index === 1) {
-                if (map.getLayer("celltowers-points")) {
-                    map.removeLayer('celltowers-points');
-                }
-            } else if (index === 3) {
-                //exit to Portland
-                map.setStyle('mapbox://styles/mapbox/light-v10');
+
+    // TESTING!!!
+    // 9. Initialize the script panel
+    scriptPanel
+        .setup({
+        step: ".scene", // all the scenes.
+        offset: 0.33, // the location of the enter and exit trigger
+        debug: false // toggler on or off the debug mode.
+        })
+        .onStepEnter(handleSceneEnter)
+        .onStepExit(handleSceneExit);
+
+    // 10. This function performs when a scene enters the storyboard
+    function handleSceneEnter(response) {
+        var index = response.index; // capture the id of the current scene. 
+        if (index === 0) { // When enter the first scene
+            // map.flyTo({
+            //     center: [0,20],
+            //     zoom: 1.2,
+            //     pitch: 0,
+            //     speed: 0.5
+            // }); // fly to a new location
+            
+            if (typeof (map.getSource('world')) == 'undefined') { //if the map source 'world' does not exist
+                map.addSource('world', {
+                    type: 'geojson',
+                    data: worldData
+                }); // reload the map source of 'world'
             } 
+            document.getElementById("cover").style.visibility = "hidden"; // Hide the cover page
+        } 
+    }
+
+    // 11. This function performs when a scene exists the storyboard
+    function handleSceneExit(response) {
+        var index = response.index;
+
+        if (index === 0) { //NOTE: "getLayer" uses the MAP ID FROM THE map.addlayer FUNCTION!!!
+            if (map.getLayer("income-layer")) {
+                map.removeLayer('income-layer');
+            } else if (map.getLayer("schooling-layer")) {
+                map.removeLayer('schooling-layer');
+            }
+            if (response.direction == 'down') { 
+            document.getElementById("cover").style.visibility = "hidden"; // when you scroll down, the cover page will be hided.
+            } else {
+            document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
+            }
+        } 
+    }
+    // TESTING!!!
+
+
+
+}
+
+loadData();
+
+document.getElementById("btn-income").addEventListener("click", () => {
+    activeLayer = "income";
+    map.setLayoutProperty("income-layer", "visibility", "visible");
+    map.setLayoutProperty("schooling-layer", "visibility", "none");
+    updateLegend("income");
+});
+
+document.getElementById("btn-schooling").addEventListener("click", () => {
+    activeLayer = "schooling";
+    map.setLayoutProperty("income-layer", "visibility", "none");
+    map.setLayoutProperty("schooling-layer", "visibility", "visible");
+    updateLegend("schooling");
+});
+
+map.on("click", (e) => {
+    let features = map.queryRenderedFeatures(e.point, {
+        layers: ["income-layer", "schooling-layer"]
+    });
+
+    if (!features.length) return;
+
+    let props = features[0].properties;
+
+    let income = clean(parseFloat(props.INCOME));
+    let schooling = clean(parseFloat(props.AVG_YR_SCH));
+
+    document.getElementById("country-name").innerHTML = props.COUNTRY;
+    document.getElementById("income").innerHTML = income === null ? "No Data" : income.toLocaleString();
+    document.getElementById("schooling").innerHTML = schooling === null ? "No Data" : schooling;
+
+    generateChart(income, schooling);
+
+    // Popup at clicked point
+    new mapboxgl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML(`
+            <strong>${props.COUNTRY}</strong><br>
+            Income: ${income === null ? "No Data" : income.toLocaleString()}<br>
+            Schooling: ${schooling === null ? "No Data" : schooling}
+        `)
+        .addTo(map);
+});
+
+
+
+function generateChart(income, schooling) {
+
+    if (chart) chart.destroy();
+
+    chart = c3.generate({
+        bindto: "#chart",
+        data: {
+            columns: [
+                ["Income", income || 0],
+                ["Schooling", schooling || 0]
+            ],
+            type: "bar",
+            colors: {
+                Income: "#54278f",
+                Schooling: "#2ca25f"
+            }
+        },
+        tooltip: {
+            format: {
+                value: function (value) {
+                    return value === 0 ? "No Data" : value;
+                }
+            }
+        },
+        axis: {
+            x: { type: "category", categories: [""] }
         }
     });
-};
+}
 
-// 5 call the data loading function.
-geojsonFetch();
+document.getElementById("reset").addEventListener("click", () => {
+    map.flyTo({ zoom: 1.2, center: [0, 20] });
+});
+
+
+// Code section for side panel that opens and closes on click to view main panel
+// Referenced the following for side panel that opens and closes on click to view main panel: 
+// https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp
+// https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp-->
+
+// two lines below are used to make the side panel show by default
+document.getElementById("mySidepanel").style.width = "600px";
+document.getElementById("mySidepanel").style.height = "100%";
+
+/* Set the width and heigh of the sidebar to 600px (show it) */
+function openNav() {
+  document.getElementById("mySidepanel").style.width = "600px";
+  document.getElementById("mySidepanel").style.height = "100%";
+}
+
+/* Set the width of the sidebar to 0 (hide it) */
+function closeNav() {
+  document.getElementById("mySidepanel").style.width = "0";
+}
+
+

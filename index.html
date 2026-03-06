@@ -12,10 +12,20 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap"/>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/c3.min.css">
     <link rel="stylesheet" href="css/main.css">
+
+    <!-- TESTING ADDING LINE BELOW -->
+    <!-- <link rel="stylesheet" href="css/index.css" /> -->
+
     <script src="https://unpkg.com/scrollama"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+    <!-- include c3.js to make charts. c3.js is built upon d3.js -->
+    <script src="js/d3.js"></script>
+    <script src="js/c3.min.js"></script>
     
 </head>
 <body>
@@ -32,13 +42,8 @@
             <h5>Lilian Law, Nina Jiang, Yijia Liu</h5>
             <p class="slide_tinytext">GEOG 458 Advanced Digital Geographies: Group 03</p>
 
-            <!-- <div class="footnote">
-                <span> This line is a place holder for copyright note or other footnotes.</span>
-                <a target="_blank" href="https://www.uw.edu"> <img src="img/uw_logo.png" width="50px"></a>
-            </div> -->
         </div>
     </section>
-    ....
 
     <!-- Section 2/Slide 2: Introduction slide and about the project -->
     <section id="cover">
@@ -53,7 +58,6 @@
 
         </div>
     </section>
-    ....
 
     <!-- Slide 3/Section 3: Additional background (slide for multimedia) -->
     <section id="cover">
@@ -63,7 +67,6 @@
             <p class="slide_tinytext">This section shows where active research is happening, and on what topics to communicate on-going nature of scientific learning. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc.</p>
         </div>
     </section>
-    ....
     
     <!-- Slide 4/Section 4: About the maps (explains the 3 maps, what they show, and how to use the interface) -->
     <section id="cover">
@@ -76,19 +79,66 @@
         </div>
     </section>
 
-
     <!-- Slide 5/Section 5: Main maps and slides go here -->
     <section id="geonarrative">
         <!-- NOTE: COMMENTED OUT SECTION BELOW FOR NOW, AM TESTING PUTTING MY OWN MAP FORMATTING HERE! -->
-        <!-- <div id="storyboard">
+        <div id="storyboard">
             <div id="map"></div>
         </div>
 
         <article class="scene" data-scene="0">
-            <h2>STEP 1: Loading Polygons</h2>
+            <!-- <h2>STEP 1: Loading Polygons</h2> -->
+            <!-- TESTING!!! -->
+            <!-- Sidebar -->
+            <div id="info">
+                <!-- Referenced the following for side panel that opens and closes on click to view main panel: 
+                https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp
+                https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp-->
+                <div id="mySidepanel" class="sidepanel">
+                    <div id="title">
+                        Global Income & Schooling (2000)
+                        <span><a href="https://github.com" target="_blank"><i class="bi bi-github"></i></a></span>
+                        <span id="reset"><a href="#">reset</a></span>
+                    </div>
+
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <!-- referenced the following for code below for nav bar:
+                    https://www.w3schools.com/css/css_navbar.asp 
+                    https://www.w3schools.com/css/css_navbar_vertical.asp 
+                    https://www.w3schools.com/css/css_navbar_horizontal.asp -->
+                    <ul>
+                        <li class="active" id="btn-combineddata"><a href="./index.html">Combined Data</a></li>
+                        <li id="btn-schooling"><a href="./education.html">Education</a></li>
+                        <li id="btn-income"><a href="./income.html">Income</a></li>
+                    </ul>
+
+                    <!-- Country Info -->
+                    <h3 id="country-name">Click a country</h3>
+                    <p><span class="info-label">Income:</span> <span id="income" class="info-value">—</span></p>
+                    <p><span class="info-label">Schooling:</span> <span id="schooling" class="info-value">—</span></p>
+
+                    <!-- Bar Chart -->
+                    <div id="chart"></div>
+
+                    <!-- Footer -->
+                    <div id="footer">
+                        This smart dashboard visualizes global average income (in USD converted by 2024 rate) and average years of schooling (for adults) in 2000 using
+                        interactive choropleth maps. Use the buttons above to switch between income and schooling layers.
+                    </div>
+
+                </div>
+
+                <button class="openbtn" onclick="openNav()">&#9776;</button>
+
+            </div>
+
+            <!-- Map + Legend -->
+            <div id="map"></div>
+            <div id="legend"></div>
+            <!-- TESTING!!! -->
         </article>
 
-        <article class="scene" data-scene="1">
+        <!-- <article class="scene" data-scene="1">
             <h2>STEP 2: Loading Points</h2>
         </article>
         
@@ -119,9 +169,9 @@
                 <p><i class="bi bi-map"></i> <span>3,520</span>
                 </p>
             </div>
-        </article>
+        </article> -->
         
-        <article class="scene" data-scene="5">
+        <!-- <article class="scene" data-scene="5">
             <h2>STEP 6: Image </h2>
             <img src="img/portland.jpg"></img>
             </article>
@@ -130,8 +180,12 @@
         </article> -->
 
         <!-- TESTING SECTION BELOW OF MAIN MAPS FROM MAIN PROTOTYPE HERE WITH THE FUNCTIONAL TABS TO SWITCH MAPS -->
-
+        
+    
     </section>
+
+
+
 
 
     <!-- Slide 6/Section 6: About the Data (Data sources and why we chose them what the data shows, the years range, etc) -->
@@ -162,8 +216,7 @@
         </div>
     </section>
 
-
-    <section id="footer">
+    <section id="footer_mainpage">
         <footer class="site-footer">
             <div class="container">
                 <div class="row">
@@ -216,6 +269,7 @@
             </div>
         </footer>
     </section>
+
     <script src="./js/main.js"></script>
 </body>
 </html>
