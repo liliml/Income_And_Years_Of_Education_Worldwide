@@ -308,6 +308,7 @@ document.getElementById("btn-income").addEventListener("click", () => {
 
 
 map.on("click", (e) => {
+    
     let features = map.queryRenderedFeatures(e.point, {
         layers: ["income-layer", "schooling-layer"]
     });
@@ -334,6 +335,11 @@ map.on("click", (e) => {
             Schooling: ${schooling === null ? "No Data" : schooling}
         `)
         .addTo(map);
+    
+    //Referenced the following sources to update the map according to the year selected:
+    //https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
+    //https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data
+        map.getSource('world').setData(`assets/${currentYear}/merged_${currentYear}.geojson`); //update the map source of 'world' to show the data for the selected year.
 });
 
 
