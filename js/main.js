@@ -50,7 +50,7 @@ let map = new mapboxgl.Map({
 
 // declare the coordinated chart as well as other variables.
 let chart = null;
-    activeLayer = "income";
+    activeLayer = "combinedata";
     worldData = null;
 
 // create a few constant variables.
@@ -210,19 +210,42 @@ async function loadData() {
 
 loadData();
 
-document.getElementById("btn-income").addEventListener("click", () => {
-    activeLayer = "income";
-    map.setLayoutProperty("income-layer", "visibility", "visible");
-    map.setLayoutProperty("schooling-layer", "visibility", "none");
-    updateLegend("income");
-});
+//Referenced this sources for code to add and remove classes from "buttons": https://stackoverflow.com/questions/507138/how-to-add-a-class-to-an-html-element-with-javascript
+//for button element ids "btn-combined", "btn-income", "btn-schooling"  
+//in the two seciotns below when getting the elments add class to make button appear in the "active" color 
+//and remove "active" class from the other two ids so they are not shown in the "active" color
+//see added 3 lines below in each code chunk below the updateLegend line
+
+// document.getElementById("btn-combinedata").addEventListener("click", () => {
+//     activeLayer = "combinedata";
+//     map.setLayoutProperty("income-layer", "visibility", "visible");
+//     map.setLayoutProperty("schooling-layer", "visibility", "none");
+//     updateLegend("combinedata");
+//     document.getElementById("btn-combinedata").classList.add("active");
+//     document.getElementById("btn-schooling").classList.remove("active");
+//     document.getElementById("btn-income").classList.remove("active");
+// });
 
 document.getElementById("btn-schooling").addEventListener("click", () => {
     activeLayer = "schooling";
     map.setLayoutProperty("income-layer", "visibility", "none");
     map.setLayoutProperty("schooling-layer", "visibility", "visible");
     updateLegend("schooling");
+    document.getElementById("btn-combinedata").classList.remove("active");
+    document.getElementById("btn-schooling").classList.add("active");
+    document.getElementById("btn-income").classList.remove("active");
 });
+
+document.getElementById("btn-income").addEventListener("click", () => {
+    activeLayer = "income";
+    map.setLayoutProperty("income-layer", "visibility", "visible");
+    map.setLayoutProperty("schooling-layer", "visibility", "none");
+    updateLegend("income");
+    document.getElementById("btn-combinedata").classList.remove("active");
+    document.getElementById("btn-schooling").classList.remove("active");
+    document.getElementById("btn-income").classList.add("active");
+});
+
 
 map.on("click", (e) => {
     let features = map.queryRenderedFeatures(e.point, {
@@ -254,36 +277,121 @@ map.on("click", (e) => {
 });
 
 
+//ORGINAL FUNCTION
+// function generateChart(income, schooling) {
 
+//     if (chart) chart.destroy();
+
+//     chart = c3.generate({
+//         bindto: "#chart",
+//         data: {
+//             columns: [
+//                 ["Income", income || 0],
+//                 ["Schooling", schooling || 0]
+//             ],
+//             type: "bar",
+//             colors: {
+//                 Income: "#54278f",
+//                 Schooling: "#2ca25f"
+//             }
+//         },
+//         tooltip: {
+//             format: {
+//                 value: function (value) {
+//                     return value === 0 ? "No Data" : value;
+//                 }
+//             }
+//         },
+//         axis: {
+//             x: { type: "category", categories: [""] }
+//         }
+//     });
+// }
 function generateChart(income, schooling) {
-
-    if (chart) chart.destroy();
-
-    chart = c3.generate({
-        bindto: "#chart",
-        data: {
-            columns: [
-                ["Income", income || 0],
-                ["Schooling", schooling || 0]
-            ],
-            type: "bar",
-            colors: {
-                Income: "#54278f",
-                Schooling: "#2ca25f"
-            }
-        },
-        tooltip: {
-            format: {
-                value: function (value) {
-                    return value === 0 ? "No Data" : value;
+    if (activeLayer == "combinedata") { //first case for combined data
+        if (chart) chart.destroy();
+        chart = c3.generate({
+            bindto: "#chart",
+            data: {
+                columns: [
+                    ["Income", income || 0],
+                    ["Schooling", schooling || 0]
+                ],
+                type: "bar",
+                colors: {
+                    Income: "#54278f",
+                    Schooling: "#2ca25f"
                 }
+            },
+            tooltip: {
+                format: {
+                    value: function (value) {
+                        return value === 0 ? "No Data" : value;
+                    }
+                }
+            },
+            axis: {
+                x: { type: "category", categories: [""] }
             }
-        },
-        axis: {
-            x: { type: "category", categories: [""] }
-        }
-    });
+        });
+    } else if (activeLayer == "schooling") { //second case for education data
+        if (chart) chart.destroy();
+
+        chart = c3.generate({
+            bindto: "#chart",
+            data: {
+                columns: [
+                    ["Schooling", schooling || 0]
+                ],
+                type: "bar",
+                colors: {
+                    Schooling: "#2ca25f"
+                }
+            },
+            tooltip: {
+                format: {
+                    value: function (value) {
+                        return value === 0 ? "No Data" : value;
+                    }
+                }
+            },
+            axis: {
+                x: { type: "category", categories: [""] }
+            }
+        });
+    } else { //third case for income data
+        if (chart) chart.destroy();
+
+        chart = c3.generate({
+            bindto: "#chart",
+            data: {
+                columns: [
+                    ["Income", income || 0]
+                ],
+                type: "bar",
+                colors: {
+                    Income: "#54278f",
+                }
+            },
+            tooltip: {
+                format: {
+                    value: function (value) {
+                        return value === 0 ? "No Data" : value;
+                    }
+                }
+            },
+            axis: {
+                x: { type: "category", categories: [""] }
+            }
+        });    
+    }
+    
+
+    
+
+    
 }
+
 
 document.getElementById("reset").addEventListener("click", () => {
     map.flyTo({ zoom: 1.2, center: [0, 20] });
@@ -296,12 +404,12 @@ document.getElementById("reset").addEventListener("click", () => {
 // https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp-->
 
 // two lines below are used to make the side panel show by default
-document.getElementById("mySidepanel").style.width = "600px";
+document.getElementById("mySidepanel").style.width = "400px";
 document.getElementById("mySidepanel").style.height = "100%";
 
-/* Set the width and heigh of the sidebar to 600px (show it) */
+/* Set the width and heigh of the sidebar (show it) */
 function openNav() {
-  document.getElementById("mySidepanel").style.width = "600px";
+  document.getElementById("mySidepanel").style.width = "400px";
   document.getElementById("mySidepanel").style.height = "100%";
 }
 

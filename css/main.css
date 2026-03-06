@@ -76,7 +76,7 @@ body {
 }
 
 /* Layer Toggle Buttons */
-.toggle-btn {
+/*ORGINAL: .toggle-btn {
   display: inline-block;
   padding: 8px 14px;
   margin-right: 8px;
@@ -91,7 +91,50 @@ body {
 
 .toggle-btn:hover {
   background: #6c757d;
+} */
+
+/* TEST BELOW */
+/* Section below for nav bar, referenced the following for code:
+https://www.w3schools.com/css/css_navbar.asp 
+https://www.w3schools.com/css/css_navbar_vertical.asp 
+https://www.w3schools.com/css/css_navbar_horizontal.asp */
+
+.toggle-btn {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #000000;
+  font-weight: 800;
+  justify-content: center;
+  /* display: flex; */
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  float: left;
 }
+
+/* ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  float: left;
+} */
+
+.toggle-btn:hover {
+  background-color: #989898;
+  color: rgb(255, 255, 255);
+  text-decoration: underline;
+}
+
+
+
+
+
 
 /* Country Info Text */
 #country-name {
@@ -286,6 +329,7 @@ https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp */
   color: white;
   padding: 10px 15px;
   border: none;
+  /* position: top left; */
 }
 
 .openbtn:hover {
@@ -423,12 +467,12 @@ p {
 /* Section below for "scene" class in the index.html file */
 .scene {
   position: relative;
-  max-width: 40rem;
+  /* max-width: 40rem; */
   /* margin: 0 auto 0 auto; */
-  margin: 0 auto 0 4rem;
-  padding: 0;
+  /* margin: 0 auto 0 4rem; */
+  /* padding: 0; */
   /* color: #fff; */
-  background-color: rgba(0, 0, 0, 0.1);
+  /* background-color: rgba(0, 0, 0, 0.1); */
 }
 
 .scene:first-child {
