@@ -1,4 +1,26 @@
-// CODE HERE
+//slider years array variable (called "yearsRange") from 2000 to 2021 for dataset select to show data for that year. Will use indexing to show what year for instance
+//for 2014: yearsRange[14] will show 2014 data.
+let yearsRange = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
+
+//currentYear variable to be used for indexing the selectedYear array and showing the data for that year. Will start with 2000 data.
+//This variable will change as the user moves the slider to select different years and show the data for that year.
+let currentYear = yearsRange[0]; //default is show data for year 2000 when the page is loaded: yearsRange[0] so year is 2000.
+
+//Referenced this source for time slider: https://docs.mapbox.com/mapbox-gl-js/example/timeline-animation/
+//Function for year selected on time slider
+function filterBy(yearPassedIn) { //NOTE: yearPassedIn is a parameter, and is a year, can be currentYear, 
+//but can change, later see filterBy function call and updating the slider and such in the code
+    
+    //const filters = ['==', 'currentYear', currentYear];
+    //map.setFilter('earthquake-circles', filters);
+    //map.setFilter('earthquake-labels', filters);
+
+    // Set the label to show current selected year for title for slider (see largeTextSliderValue id in index.html in the slider div)
+    document.getElementById('largeTextSliderValue').textContent = yearsRange[yearPassedIn];
+    // Set the label to show current selected year (see yearSliderValue id in index.html in the slider div)
+    document.getElementById('yearSliderValue').textContent = yearsRange[yearPassedIn];
+}
+
 
 // 1. Declare the maps, script panels, and different thematic layers.
 // ORGINAL: let map, scriptPanel = scrollama(), countiesLayer, cellTowersLayer;
@@ -89,7 +111,11 @@ function clean(v) {
 }
 
 async function loadData() {
-    let response = await fetch("assets/2000/merged_2000.geojson");
+    //Referenced the following sources to use variables in file path, in this case to put current selected year variable into file path as year changes:
+    //https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Strings
+    //https://stackoverflow.com/questions/3304014/how-to-interpolate-variables-in-strings-in-javascript-without-concatenation
+    console.log("currentYear variable before fetch:::", currentYear);
+    let response = await fetch(`assets/${currentYear}/merged_${currentYear}.geojson`); //the backticks are for string literals, have to use these to use variable name in string name
     worldData = await response.json();
 
     map.on("load", () => {
@@ -151,6 +177,36 @@ async function loadData() {
                 "fill-outline-color": "#222"
             }
         });
+
+
+        //TESTING ADDING CALL filterBy FUNCTION TO MAP TO CHANGE YEAR VALUE TO SHOW DIFF DATA!
+        // Set filter to year 2000 (0 is an index, here it is 0 and is year 2000). 
+        // Am using currentYear variable here, is set to index 0 aka year 2000, see code at top of this file
+        filterBy(currentYear);
+        //REMINDER: currentYear is a GLOBAL VARIABLE (see code at top of this file where it is defined and declared)
+        document.getElementById('slider').addEventListener('input', (e) => { 
+            //console.log("value of e:", e);
+            let currSelYear = parseInt(e.target.value, 10); //create currSelYear variable which gets timeslider value of the year. 10 in this case means use base 10
+            //to understand line above and parseInt function, used this reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
+            console.log("currentYear value from line above in code:", currSelYear);
+            console.log("currSelYear value:", currSelYear);
+            console.log("currentYear variable type:", typeof currSelYear);
+            currentYear = yearsRange[yearsRange.indexOf(currSelYear)] //update currentYear variable to be the index of the selected year, so that it can be used in the filterBy function to show the data for that year. 
+            // indexOf function gets index of the selected year from yearsRange array. 
+            // Referenced this source for indexOf function: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+            //
+            console.log("currentYear variable after update:", currentYear);
+
+            //TESTING BELOW, ATTEMPTING TO RELOAD MAP SINCE MAP ISNT' UPDATING AND GETTING CALLED AGAIN AS DATA CHAANGES:
+            //Referenced the following sources to update the map according to the year selected:
+            //https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
+            //https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data
+            map.getSource('world').setData(`assets/${currentYear}/merged_${currentYear}.geojson`); //update the map source of 'world' to show the data for the selected year.
+
+            filterBy(currSelYear);
+        });
+        //TESTING ADDING CALL filterBy FUNCTION TO MAP TO CHANGE YEAR VALUE TO SHOW DIFF DATA!
+
 
         updateLegend("income");
     });
