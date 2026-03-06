@@ -35,6 +35,14 @@ h1 {
   text-shadow: 0 0 3px rgba(0, 0, 0, .95);
 }
 
+/* For slide main title text for non map slides */
+.slide_titletext {
+  text-decoration: underline;
+  text-shadow: #26272b 0.1em 0.1em 0.1em;
+}
+
+
+
 h2 {
   text-align: center;
   padding: 1rem;
@@ -53,6 +61,12 @@ h5 {
 
 p {
   line-height: 1.5;
+}
+
+/* For tiny text under small text under title on title, intro, background, data slide, and other non map slides */
+.slide_tinytext {
+  font-size: medium;
+  text-align: center;
 }
 
 .canvas-center {
