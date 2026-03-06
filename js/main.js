@@ -60,6 +60,9 @@ const incomeColors = ['#f2f0f7','#cbc9e2','#9e9ac8','#756bb1','#54278f','#3f007d
 const schoolingBreaks = [0, 3, 6, 9, 12];
 const schoolingColors = ['#edf8fb','#b2e2e2','#66c2a4','#2ca25f','#006d2c'];
 
+// const combinedataBreaks = [0, 1, 2, 3];
+// const combinedataColors = ['#ff0800','#ff6f00','#d4ff00'];
+
 // create the legend object and anchor it to the html element with id legend.
 const legend = document.getElementById('legend');
 
@@ -216,11 +219,12 @@ loadData();
 //and remove "active" class from the other two ids so they are not shown in the "active" color
 //see added 3 lines below in each code chunk below the updateLegend line
 
+//WEIRD ERROR, FOR NOW AM LEAVING COMMENTED OUT, UNCOMMENT AND VIEW CONSOLE TO SEE AND ALSO MAKES THE SIDE PANEL DISAPPEAR???
 // document.getElementById("btn-combinedata").addEventListener("click", () => {
 //     activeLayer = "combinedata";
 //     map.setLayoutProperty("income-layer", "visibility", "visible");
 //     map.setLayoutProperty("schooling-layer", "visibility", "none");
-//     updateLegend("combinedata");
+//     updateLegend("schooling");
 //     document.getElementById("btn-combinedata").classList.add("active");
 //     document.getElementById("btn-schooling").classList.remove("active");
 //     document.getElementById("btn-income").classList.remove("active");
