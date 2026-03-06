@@ -91,7 +91,8 @@ p {
   /* Code below is for background image for cover section aka "section 1" in index.html */
   /* AM CURRENTLY TESTING BACKGROUND IMG WITH income.jpg, IS NOT ACTUAL BACKGROUND IMAGE */
   /* For line below referenced for background image on a webpage: https://www.w3schools.com/html/html_images_background.asp */
-  background-image: url('../img/income.png'); 
+  /* Background image source: https://secretseattle.co/university-of-washington-ranking/  */
+  background-image: url('../img/junru-pu-wTBc6waE5hI-unsplash.jpg'); 
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: cover;
