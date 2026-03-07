@@ -337,11 +337,16 @@ https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp */
 }
 
 #mySidepanel {
-  padding-left: 20px;
+  /* padding-left: 20px; */
+
   /* font-size: 26px;
   font-family: 'Oswald', sans-serif;
   margin-bottom: 10px;
   display: inline-block; */
+
+  /* width: 400px;
+  height: 100%; */
+
 }  
 
 

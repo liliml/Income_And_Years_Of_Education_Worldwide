@@ -44,6 +44,7 @@ window.scrollTo(0, 0); // scroll the geo-narrative to the coverpage
 adjustStoryboardlSize(); // force a browser window resize.
 window.addEventListener("resize", adjustStoryboardlSize); // ask the browser window listen to the resize event, thereby force a viewport resize whenever adjusting the window size.
 
+
 // 3. Define Generic window resize listener event
 function adjustStoryboardlSize() {
 
@@ -252,10 +253,12 @@ async function loadData() {
 
     // TESTING!!!
     // 9. Initialize the script panel
-    scriptPanel
-        .setup({
+    //Referenced this source make side panel appear faster editing offset property value, adding the easing property, and adding the animate property to make the side panel appear and disappear smoother: https://docs.mapbox.com/mapbox-gl-js/api/properties/
+    scriptPanel.setup({
         step: ".scene", // all the scenes.
-        offset: 0.33, // the location of the enter and exit trigger
+        offset: 0.9, // the location of the enter and exit trigger, need higher value to make side panel show up faster, orginal value was 0.33, current best value that makes side panel show right away is 0.9, can only be at max 1.0 or fails to work
+        easing:1,
+        animate:true,
         debug: false // toggler on or off the debug mode.
         })
         .onStepEnter(handleSceneEnter)
@@ -271,6 +274,13 @@ async function loadData() {
             //     pitch: 0,
             //     speed: 0.5
             // }); // fly to a new location
+
+            // // two lines below are used to make the side panel show by default
+            document.getElementById("mySidepanel").style.width = "400px";
+            document.getElementById("mySidepanel").style.height = "100%";
+            document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
+
+            // document.getElementById("legend").style.visibility = "visible"; //need this to make legend appear quicker
             
             if (typeof (map.getSource('world')) == 'undefined') { //if the map source 'world' does not exist
                 map.addSource('world', {
@@ -279,6 +289,7 @@ async function loadData() {
                 }); // reload the map source of 'world'
             } 
             document.getElementById("cover").style.visibility = "hidden"; // Hide the cover page
+            document.getElementById("mySidepanel").style.visibility = "visible"; //show side panel
         } 
          
     }
@@ -297,22 +308,19 @@ async function loadData() {
             // }
             //TESTING BELOW:
             if (map.getLayer("income-layer")) {
+                map.removeLayer('combined-layer');
                 map.removeLayer('schooling-layer');
-                
-                //TESTING BELOW, ATTEMPTING TO RELOAD MAP SINCE MAP ISNT' UPDATING AND GETTING CALLED AGAIN AS DATA CHAANGES:
-                //Referenced the following sources to update the map according to the year selected:
-                //https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
-                //https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data
-                map.getSource('world').setData(`assets/${currentYear}/merged_${currentYear}.geojson`); //update the map source of 'world' to show the data for the selected year.
-
+                // map.addLayer('income-layer');
             } else if (map.getLayer("schooling-layer")) {
+                map.removeLayer('combined-layer');
+                // map.addLayer('schooling-layer');
                 map.removeLayer('income-layer');
 
-                //TESTING BELOW, ATTEMPTING TO RELOAD MAP SINCE MAP ISNT' UPDATING AND GETTING CALLED AGAIN AS DATA CHAANGES:
-                //Referenced the following sources to update the map according to the year selected:
-                //https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
-                //https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data
-                map.getSource('world').setData(`assets/${currentYear}/merged_${currentYear}.geojson`); //update the map source of 'world' to show the data for the selected year.
+            } else if (map.getLayer("combined-layer")) {
+                // map.addLayer('combined-layer');
+                map.removeLayer('schooling-layer');
+                map.removeLayer('income-layer');
+
             }
 
 
@@ -325,8 +333,10 @@ async function loadData() {
             //TESTING BELOW TO MAKE MAP REAPPEAR
             if (response.direction == 'down') { 
             document.getElementById("cover").style.visibility = "hidden"; // when you scroll down, the cover page will be hided.
+            document.getElementById("mySidepanel").style.visibility = "hidden"; //hide side panel
             } else if (response.direction == 'up') {
-            document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
+            document.getElementById("cover").style.visibility = "hidden"; // when you scroll up, the cover page will be shown.
+            document.getElementById("mySidepanel").style.visibility = "hidden"; //hide side panel
             } else {
             //document.getElementById("map").style.visibility = "visible";    
             }
@@ -546,8 +556,8 @@ document.getElementById("reset").addEventListener("click", () => {
 // https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp-->
 
 // two lines below are used to make the side panel show by default
-document.getElementById("mySidepanel").style.width = "400px";
-document.getElementById("mySidepanel").style.height = "100%";
+// document.getElementById("mySidepanel").style.width = "400px";
+// document.getElementById("mySidepanel").style.height = "100%";
 
 /* Set the width and heigh of the sidebar (show it) */
 function openNav() {
