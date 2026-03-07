@@ -137,6 +137,32 @@ async function loadData() {
             data: worldData
         });
 
+        //NOTE: IS FOR TESTING COMBINED LAYER CHANGE THIS LATER!!!
+        // "COMBINED LAYER" choropleth
+        map.addLayer({
+            id: "combined-layer",
+            type: "fill",
+            source: "world",
+            paint: {
+            "fill-color": [
+                "case",
+                ["==", ["get", "INCOME"], -1], '#999999',
+                [
+                    "step",
+                    ["get", "INCOME"],
+                    incomeColors[0], incomeBreaks[1],
+                    incomeColors[1], incomeBreaks[2],
+                    incomeColors[2], incomeBreaks[3],
+                    incomeColors[3], incomeBreaks[4],
+                    incomeColors[4], incomeBreaks[5],
+                    incomeColors[5]
+                ]
+            ],
+                "fill-opacity": 0.8,
+                "fill-outline-color": "#222"
+            }
+        });
+
         // Income choropleth
         map.addLayer({
             id: "income-layer",
@@ -254,22 +280,55 @@ async function loadData() {
             } 
             document.getElementById("cover").style.visibility = "hidden"; // Hide the cover page
         } 
+         
     }
 
+    //*****************TODO: FIX CODE HERE AFTER FIXING LINE 333 SECTION */
     // 11. This function performs when a scene exists the storyboard
     function handleSceneExit(response) {
         var index = response.index;
 
         if (index === 0) { //NOTE: "getLayer" uses the MAP ID FROM THE map.addlayer FUNCTION!!!
+            //ORIGINAL BELOW:
+            // if (map.getLayer("income-layer")) {
+            //     map.removeLayer('income-layer');
+            // } else if (map.getLayer("schooling-layer")) {
+            //     map.removeLayer('schooling-layer');
+            // }
+            //TESTING BELOW:
             if (map.getLayer("income-layer")) {
-                map.removeLayer('income-layer');
-            } else if (map.getLayer("schooling-layer")) {
                 map.removeLayer('schooling-layer');
+                
+                //TESTING BELOW, ATTEMPTING TO RELOAD MAP SINCE MAP ISNT' UPDATING AND GETTING CALLED AGAIN AS DATA CHAANGES:
+                //Referenced the following sources to update the map according to the year selected:
+                //https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
+                //https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data
+                map.getSource('world').setData(`assets/${currentYear}/merged_${currentYear}.geojson`); //update the map source of 'world' to show the data for the selected year.
+
+            } else if (map.getLayer("schooling-layer")) {
+                map.removeLayer('income-layer');
+
+                //TESTING BELOW, ATTEMPTING TO RELOAD MAP SINCE MAP ISNT' UPDATING AND GETTING CALLED AGAIN AS DATA CHAANGES:
+                //Referenced the following sources to update the map according to the year selected:
+                //https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
+                //https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data
+                map.getSource('world').setData(`assets/${currentYear}/merged_${currentYear}.geojson`); //update the map source of 'world' to show the data for the selected year.
             }
+
+
+            //ORGINAL BELOW
+            // if (response.direction == 'down') { 
+            // document.getElementById("cover").style.visibility = "hidden"; // when you scroll down, the cover page will be hided.
+            // } else {
+            // document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
+            // }
+            //TESTING BELOW TO MAKE MAP REAPPEAR
             if (response.direction == 'down') { 
             document.getElementById("cover").style.visibility = "hidden"; // when you scroll down, the cover page will be hided.
-            } else {
+            } else if (response.direction == 'up') {
             document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
+            } else {
+            //document.getElementById("map").style.visibility = "visible";    
             }
         } 
     }
@@ -287,19 +346,23 @@ loadData();
 //and remove "active" class from the other two ids so they are not shown in the "active" color
 //see added 3 lines below in each code chunk below the updateLegend line
 
+//NOTE AND TODO AND FIX LATER!!!: FOR THE COMBINEDATA LAYER, AM TEMOPORARILY SHOWING THE INCOME LAYER!!!
+
 //WEIRD ERROR, FOR NOW AM LEAVING COMMENTED OUT, UNCOMMENT AND VIEW CONSOLE TO SEE AND ALSO MAKES THE SIDE PANEL DISAPPEAR???
-// document.getElementById("btn-combinedata").addEventListener("click", () => {
-//     activeLayer = "combinedata";
-//     map.setLayoutProperty("income-layer", "visibility", "visible");
-//     map.setLayoutProperty("schooling-layer", "visibility", "none");
-//     updateLegend("schooling");
-//     document.getElementById("btn-combinedata").classList.add("active");
-//     document.getElementById("btn-schooling").classList.remove("active");
-//     document.getElementById("btn-income").classList.remove("active");
-// });
+document.getElementById("btn-combinedata").addEventListener("click", () => {
+    activeLayer = "combinedata";
+    map.setLayoutProperty("combined-layer", "visibility", "visible"); //NOTE: THESE LAYERS ARE THE IDs FROM ABOVE WHEN IMPORTING LAYERS!
+    map.setLayoutProperty("income-layer", "visibility", "none");
+    map.setLayoutProperty("schooling-layer", "visibility", "none");
+    updateLegend("schooling"); //TODO: WILL FIX THIS LATER, FOR TESTING PURPOSES LEAVING AS IS
+    document.getElementById("btn-combinedata").classList.add("active");
+    document.getElementById("btn-schooling").classList.remove("active");
+    document.getElementById("btn-income").classList.remove("active");
+});
 
 document.getElementById("btn-schooling").addEventListener("click", () => {
     activeLayer = "schooling";
+    map.setLayoutProperty("combined-layer", "visibility", "none");
     map.setLayoutProperty("income-layer", "visibility", "none");
     map.setLayoutProperty("schooling-layer", "visibility", "visible");
     updateLegend("schooling");
@@ -310,6 +373,7 @@ document.getElementById("btn-schooling").addEventListener("click", () => {
 
 document.getElementById("btn-income").addEventListener("click", () => {
     activeLayer = "income";
+    map.setLayoutProperty("combined-layer", "visibility", "none");
     map.setLayoutProperty("income-layer", "visibility", "visible");
     map.setLayoutProperty("schooling-layer", "visibility", "none");
     updateLegend("income");
@@ -322,7 +386,7 @@ document.getElementById("btn-income").addEventListener("click", () => {
 map.on("click", (e) => {
     
     let features = map.queryRenderedFeatures(e.point, {
-        layers: ["income-layer", "schooling-layer"]
+        layers: ["combined-layer", "income-layer", "schooling-layer"]
     });
 
     if (!features.length) return;
