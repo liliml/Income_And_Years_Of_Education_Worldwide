@@ -91,9 +91,6 @@
         <!-- NOTE: COMMENTED OUT SECTION BELOW FOR NOW, AM TESTING PUTTING MY OWN MAP FORMATTING HERE! -->
         <div id="storyboard">
             <div id="map"></div>
-        </div>
-
-        <article class="scene" data-scene="0">
             <!-- <h2>STEP 1: Loading Polygons</h2> -->
             <!-- TESTING!!! -->
             <!-- Sidebar -->
@@ -103,11 +100,11 @@
                 https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp-->
                 <div id="mySidepanel" class="sidepanel">
                     <div id="title">
-                        Global Income & Schooling (2000)
+                        <!-- NOTE: No title goes here as this text is filled out and updated as the years change and wanted the title to reflect the yeras change too. This occurs in the javascript file main.js -->
                         <span><a href="https://github.com" target="_blank"><i class="bi bi-github"></i></a></span>
                         <span id="reset"><a href="#">reset</a></span>
                     </div>
-
+    
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <!-- referenced the following for code below for nav bar:
                     https://www.w3schools.com/css/css_navbar.asp 
@@ -118,28 +115,28 @@
                         <!-- <li class="active" id="btn-combineddata"><a href="./index.html">Combined Data</a></li>
                         <li id="btn-schooling"><a href="./education.html">Education</a></li>
                         <li id="btn-income"><a href="./income.html">Income</a></li> -->
-
+    
                         <li class="toggle-btn active" id="btn-combineddata">Combined Data</li>
                         <li class="toggle-btn" id="btn-schooling">Education</li>
                         <li class="toggle-btn" id="btn-income">Income</li>
-
+    
                         
                         <!-- Layer Toggle Buttons -->
                         <!-- <div id="layer-buttons">
                             <span class="toggle-btn active" id="btn-income">Income</span>
                             <span class="toggle-btn" id="btn-schooling">Schooling</span>
                         </div> -->
-
+    
                     </ul>
-
+    
                     <!-- Country Info -->
                     <h3 id="country-name">Click a country</h3>
                     <p><span class="info-label">Income:</span> <span id="income" class="info-value">—</span></p>
                     <p><span class="info-label">Schooling:</span> <span id="schooling" class="info-value">—</span></p>
-
+    
                     <!-- Bar Chart -->
                     <div id="chart"></div>
-
+    
                     <!-- Referenced this source for code and info about creating a slider: https://docs.mapbox.com/mapbox-gl-js/example/timeline-animation/ -->
                     <!-- TESTING SLIDER -->
                     <div id="slider_div">
@@ -148,23 +145,26 @@
                         <input id="slider" type="range" min="2000" max="2021" step="1" value="2000"> <!--value is what the starting value is in this case the year 2000, will also start at this year by default-->
                     </div>
                     <!-- TESTING SLIDER -->
-
+    
                     <!-- Footer -->
                     <div id="footer">
                         This smart dashboard visualizes global average income (in USD converted by 2024 rate) and average years of schooling (for adults) in 2000 using
                         interactive choropleth maps. Use the buttons above to switch between income and schooling layers.
                     </div>
-
+    
                 </div>
-
+    
                 <button class="openbtn" onclick="openNav()">&#9776;</button>
-
+    
             </div>
-
+    
             <!-- Map + Legend -->
             <div id="map"></div>
             <div id="legend"></div>
             <!-- TESTING!!! -->
+        </div>
+
+        <article class="scene" data-scene="0">
         </article>
 
         <!-- <article class="scene" data-scene="1">
@@ -212,10 +212,6 @@
         
     
     </section>
-
-
-
-
 
     <!-- Slide 6/Section 6: About the Data (Data sources and why we chose them what the data shows, the years range, etc) -->
     <section id="cover">

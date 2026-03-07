@@ -6,19 +6,31 @@ let yearsRange = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 20
 //This variable will change as the user moves the slider to select different years and show the data for that year.
 let currentYear = yearsRange[0]; //default is show data for year 2000 when the page is loaded: yearsRange[0] so year is 2000.
 
+
 //Referenced this source for time slider: https://docs.mapbox.com/mapbox-gl-js/example/timeline-animation/
 //Function for year selected on time slider
 function filterBy(yearPassedIn) { //NOTE: yearPassedIn is a parameter, and is a year, can be currentYear, 
 //but can change, later see filterBy function call and updating the slider and such in the code
+    console.log("current year parameter passed in:", yearPassedIn);
     
     //const filters = ['==', 'currentYear', currentYear];
     //map.setFilter('earthquake-circles', filters);
     //map.setFilter('earthquake-labels', filters);
 
+    //ORGINAL BELOW
+    // // Set the label to show current selected year for title for slider (see largeTextSliderValue id in index.html in the slider div)
+    // document.getElementById('largeTextSliderValue').textContent = yearsRange[yearPassedIn];
+    // // Set the label to show current selected year (see yearSliderValue id in index.html in the slider div)
+    // document.getElementById('yearSliderValue').textContent = yearsRange[yearPassedIn];
+
+    //TEST VERSION:
     // Set the label to show current selected year for title for slider (see largeTextSliderValue id in index.html in the slider div)
-    document.getElementById('largeTextSliderValue').textContent = yearsRange[yearPassedIn];
+    document.getElementById('largeTextSliderValue').innerHTML = yearPassedIn;
     // Set the label to show current selected year (see yearSliderValue id in index.html in the slider div)
-    document.getElementById('yearSliderValue').textContent = yearsRange[yearPassedIn];
+    document.getElementById('yearSliderValue').innerHTML = yearPassedIn;
+
+    document.getElementById('title').innerHTML = `Global Income & Schooling (${yearPassedIn})`; //update title in side panel to show textoftitle + (current year here)
+
 }
 
 

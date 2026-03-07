@@ -386,11 +386,13 @@ h2 {
   background-color: #3b3b3b;
   margin-top: 0;
   margin-bottom: 0;
+  color:white;
 }
 
 h5 {
   font-size: x-large;
   text-align: center;
+  font-style: italic;
 }
 
 p {
