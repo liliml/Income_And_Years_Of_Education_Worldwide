@@ -339,7 +339,7 @@ async function loadData() {
             document.getElementById("mySidepanel").style.visibility = "hidden"; //hide side panel
             } else {
             //document.getElementById("map").style.visibility = "visible";
-            document.getElementById("cover").style.visibility = "visible";    
+            // document.getElementById("cover").style.visibility = "visible";    
             }
         } 
     }
