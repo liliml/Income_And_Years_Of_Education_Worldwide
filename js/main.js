@@ -25,7 +25,7 @@ function filterBy(yearPassedIn) { //NOTE: yearPassedIn is a parameter, and is a 
 
     //TEST VERSION:
     // Set the label to show current selected year for title for slider (see largeTextSliderValue id in index.html in the slider div)
-    document.getElementById('largeTextSliderValue').innerHTML = yearPassedIn;
+    // document.getElementById('largeTextSliderValue').innerHTML = yearPassedIn;
     // Set the label to show current selected year (see yearSliderValue id in index.html in the slider div)
     document.getElementById('yearSliderValue').innerHTML = yearPassedIn;
 
@@ -276,7 +276,7 @@ async function loadData() {
             // }); // fly to a new location
 
             // // two lines below are used to make the side panel show by default
-            document.getElementById("mySidepanel").style.width = "400px";
+            document.getElementById("mySidepanel").style.width = "470px";
             document.getElementById("mySidepanel").style.height = "100%";
             document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
 
@@ -561,7 +561,7 @@ document.getElementById("reset").addEventListener("click", () => {
 
 /* Set the width and heigh of the sidebar (show it) */
 function openNav() {
-  document.getElementById("mySidepanel").style.width = "400px";
+  document.getElementById("mySidepanel").style.width = "470px";
   document.getElementById("mySidepanel").style.height = "100%";
 }
 

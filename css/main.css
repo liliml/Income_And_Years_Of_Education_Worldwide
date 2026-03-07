@@ -141,6 +141,7 @@ https://www.w3schools.com/css/css_navbar_horizontal.asp */
   font-size: 22px;
   margin-top: 10px;
   margin-bottom: 5px;
+  padding: 15px 5px 15px 5px; /* top, right, bottom, left is ordering of padding*/
 }
 
 .info-label {
@@ -177,12 +178,14 @@ text {
   bottom: 0;
   right: 0;
   width: 130px;
+  /* height: 275px; */
   background: #ffffff;
   margin-right: 20px;
   margin-bottom: 40px;
-  padding: 10px 20px 10px 10px;
+  /* padding: 10px 20px 10px 10px; */
+  padding: 10px 15px 10px 15px; /* top, right, bottom, left is ordering of padding*/
   border-radius: 3px;
-  text-align: center;
+  /* text-align: center; */
   font-family: 'Open Sans', sans-serif;
   box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
@@ -347,7 +350,23 @@ https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp */
   /* width: 400px;
   height: 100%; */
 
-}  
+}
+
+/* is for styling title in the side panel */
+.title {
+  padding: 10px 0px 0px 0px; /* top, right, bottom, left is ordering of padding*/
+}
+
+/* for slider on the map side panel, is mostly to create space via padding between text above and below the slider */
+#slider {
+  padding: 10px 0px 15px 0px; /* top, right, bottom, left is ordering of padding*/
+}
+
+/* For tiny text under year slider on the map side panel */
+.yearslider_tinytext {
+  font-size: medium;
+  text-align: center;
+}
 
 
 /* SECTION BELOW IS BACK TO CODE FROM main.css FILE */
@@ -379,8 +398,6 @@ h1 {
   text-decoration: underline;
   text-shadow: #26272b 0.1em 0.1em 0.1em;
 }
-
-
 
 h2 {
   text-align: center;
