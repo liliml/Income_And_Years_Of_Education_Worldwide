@@ -332,13 +332,14 @@ async function loadData() {
             // }
             //TESTING BELOW TO MAKE MAP REAPPEAR
             if (response.direction == 'down') { 
-            document.getElementById("cover").style.visibility = "hidden"; // when you scroll down, the cover page will be hided.
+            document.getElementById("cover").style.visibility = "visible"; // when you scroll down, the cover page will be hided.
             document.getElementById("mySidepanel").style.visibility = "hidden"; //hide side panel
             } else if (response.direction == 'up') {
-            document.getElementById("cover").style.visibility = "hidden"; // when you scroll up, the cover page will be shown.
+            document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
             document.getElementById("mySidepanel").style.visibility = "hidden"; //hide side panel
             } else {
-            //document.getElementById("map").style.visibility = "visible";    
+            //document.getElementById("map").style.visibility = "visible";
+            document.getElementById("cover").style.visibility = "visible";    
             }
         } 
     }
