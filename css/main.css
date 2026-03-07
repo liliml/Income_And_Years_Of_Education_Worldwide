@@ -349,6 +349,7 @@ https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp */
 
   /* width: 400px;
   height: 100%; */
+  opacity: 0.9;
 
 }
 
@@ -429,10 +430,16 @@ p {
   line-height: 1.5;
 }
 
+/* For title slide tiny text under small text under title on title, intro, background, data slide, and other non map slides */
+.titleslide_tinytext {
+  font-size: medium;
+  text-align: center;
+}
+
 /* For tiny text under small text under title on title, intro, background, data slide, and other non map slides */
 .slide_tinytext {
   font-size: medium;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .canvas-center {

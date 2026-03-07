@@ -15,9 +15,6 @@
     <link rel="stylesheet" href="css/c3.min.css">
     <link rel="stylesheet" href="css/main.css">
 
-    <!-- TESTING ADDING LINE BELOW -->
-    <!-- <link rel="stylesheet" href="css/index.css" /> -->
-
     <script src="https://unpkg.com/scrollama"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
@@ -40,7 +37,7 @@
         <div id="intro">
             <h1 class="slide_titletext">Comparing Average Income to Average Years of Schooling at a Worldwide Scale</h1>
             <h5>Lilian Law, Nina Jiang, Yijia Liu</h5>
-            <p class="slide_tinytext">GEOG 458 Advanced Digital Geographies: Group 03</p>
+            <p class="titleslide_tinytext">GEOG 458 Advanced Digital Geographies: Group 03</p>
 
         </div>
     </section>
@@ -62,7 +59,6 @@
                 this project used code from...projectnamehere and who it was by and why (and link here). 
                 This project also templated and referenced code from lab x from ... course (link here) to create ... features here and lab x from ... course (link here) to create ... features here
             </p>
-
         </div>
     </section>
 
@@ -97,8 +93,6 @@
         </div>
         
         <article class="scene" data-scene="0">
-            <!-- <h2>STEP 1: Loading Polygons</h2> -->
-            <!-- TESTING!!! -->
             <!-- Sidebar -->
             <div id="info">
                 <!-- Referenced the following for side panel that opens and closes on click to view main panel: 
@@ -152,7 +146,6 @@
                         </h2>
                     </div> -->
                     
-                    <!-- TESTING SLIDER -->
                     <div id="slider_div">
                         <!--HAVE TO HAVE THIS LINE COMMENTED OUT BELOW THAT WAS PUT INTO "h2" LINE OR DATA FAILS TO CHANGE WITH SLIDER! this line says what year is selected with yearSliderValue id, the selected year value will be shwon and filled in using javascript-->
                         <!-- <label id="yearSliderValue"></label>  -->
@@ -160,7 +153,6 @@
                             <input id="slider" type="range" min="2000" max="2021" step="1" value="2000"> <!--value is what the starting value is in this case the year 2000, will also start at this year by default-->
                         </h2>
                     </div>
-                    <!-- TESTING SLIDER -->
     
                     <!-- Footer -->
                     <div id="footer">
@@ -177,7 +169,6 @@
             <!-- Map + Legend -->
             <div id="map"></div>
             <!-- <div id="legend"></div> -->
-            <!-- TESTING!!! -->
         </article>
 
         <!-- <article class="scene" data-scene="1">
@@ -244,11 +235,53 @@
         <div id="intro">
             <h1 class="slide_titletext">Acknoledgements, References, Sources, and AI Use Disclosure</h1>
             <h5>Acknoledgments</h5>
-            <p class="slide_tinytext">We would like to Thank Bo Zhao and Liz Peng for their assistance in this project and throughout the GEOG 458 course. should thank liz and prof and creator of the projects we used</p>
+            <p class="slide_tinytext">We would like to Thank Bo Zhao and Liz Peng for their assistance in this project and throughout the GEOG 458 course.</p>
             <h5>References</h5>
-            <p class="slide_tinytext">Discuss project we used as a template for the main project here (the 3d map) and link to it as well as the labs we used aka lab 6 and lab 7 + provide links to each and what the labs were used for</p>
+            <p class="slide_tinytext">For this project, there were multiple projects and labs we used as templates.</p> 
+            <p class="slide_tinytext" style="text-decoration: underline;">
+                We used the following projects as inspriation:
+            </p>
+            <div id="inpiration_sources_div">
+                <p class="slide_tinytext">- To create the maps and rough draft of the side panel for the maps, lab 6 was used as a template and reference. Link to lab 6 (making a smart dashboard): <a href="https://github.com/jakobzhao/geog458/tree/master/labs/lab06" target="_blank">https://github.com/jakobzhao/geog458/tree/master/labs/lab06</a></p>
+                <p class="slide_tinytext">- To create the geonarraive layout (the slides without the maps), lab 7 was used as a template and reference. Link to lab 7 (making a map-based storytelling project): <a href="https://github.com/jakobzhao/geog458/tree/master/labs/lab07" target="_blank">https://github.com/jakobzhao/geog458/tree/master/labs/lab07</a></p>
+                <p class="slide_tinytext">- A 3D version of this map was attemtped time was limited and was unable to finish the 3d version of the maps. The orginal 3d project referenced was about resturant compaints in NYC. The project can be viewed here: <a href="https://labs.mapbox.com/bites/00304/" target="_blank">https://labs.mapbox.com/bites/00304/</a></p></li>
+                <p class="slide_tinytext">- The unfinished version of the 3d maps project GitHub repsository can be viewed here: <a href="https://github.com/liliml/geog-458-finalprojectprep3dmap-part2" target="_blank">https://github.com/liliml/geog-458-finalprojectprep3dmap-part2</a></p>
+                <p class="slide_tinytext">- The unfinished version of the 3d maps project web interface can be viewed here: <a href="https://liliml.github.io/geog-458-finalprojectprep3dmap-part2/" target="_blank">https://liliml.github.io/geog-458-finalprojectprep3dmap-part2/</a></p>               
+            </div>
             <h5>Sources</h5>
-            <p class="slide_tinytext">Use unordered list here and put links with sentence explaination of what each source was used for</p>
+            <p class="slide_tinytext" style="text-decoration: underline;">
+                The following sources were used and referenced for code or additional help:
+            </p>
+            <div id="additional_sources_and_resources_div">
+                <!-- NOTE: Some of the sources below were used for multiple of files -->
+
+                <!-- Sources and references for index.html file -->
+                <p class="slide_tinytext">- Source for background image: <a href="https://secretseattle.co/university-of-washington-ranking/" target="_blank">https://secretseattle.co/university-of-washington-ranking/</a></p>
+                <p class="slide_tinytext">- w3schools source 1 referenced for side panel that opens and closes to view main maps: <a href="https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp" target="_blank">https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp</a></p>
+                <p class="slide_tinytext">- w3schools source 2 referenced for side panel that opens and closes to view main maps: <a href="https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp" target="_blank">https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp</a></p>              
+                <p class="slide_tinytext">- w3schools source 1 referenced for side panel map tabs to select a map to view: <a href="https://www.w3schools.com/css/css_navbar.asp" target="_blank">https://www.w3schools.com/css/css_navbar.asp</a></p>
+                <p class="slide_tinytext">- w3schools source 2 referenced for side panel map tabs to select a map to view: <a href="https://www.w3schools.com/css/css_navbar_vertical.asp" target="_blank">https://www.w3schools.com/css/css_navbar_vertical.asp</a></p>
+                <p class="slide_tinytext">- w3schools source 3 referenced for side panel map tabs to select a map to view: <a href="https://www.w3schools.com/css/css_navbar_horizontal.asp" target="_blank">https://www.w3schools.com/css/css_navbar_horizontal.asp</a></p>
+                <p class="slide_tinytext">- mapbox documentation referenced to create a time slider to select a year of data to show on the maps: <a href="https://docs.mapbox.com/mapbox-gl-js/example/timeline-animation/" target="_blank">https://docs.mapbox.com/mapbox-gl-js/example/timeline-animation/</a></p>
+                
+                <!-- Sources and references for main.css file -->
+                <p class="slide_tinytext">- w3schools source 1 referenced to create and style side panel that opens and closes on click: <a href="https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp" target="_blank">https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp</a></p>
+                <p class="slide_tinytext">- w3schools source 2 referenced to create and style side panel that opens and closes on click: <a href="https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp" target="_blank">https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp</a></p>
+                <p class="slide_tinytext">- w3schools source referenced for additional background and code on applying a background image to a webpage: <a href="https://www.w3schools.com/html/html_images_background.asp" target="_blank">https://www.w3schools.com/html/html_images_background.asp</a></p>
+
+                <!-- Sources and references for main.js file -->
+                <p class="slide_tinytext">- mapbox documentation referenced for creating a time slider: <a href="https://docs.mapbox.com/mapbox-gl-js/example/timeline-animation/" target="_blank">https://docs.mapbox.com/mapbox-gl-js/example/timeline-animation/</a></p>
+                <p class="slide_tinytext">- mozilla documentation referenced on how to use variables in a file path, in this project was used to put the current selected year variable into a file path and other parameters as the year changes: <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Strings" target="_blank">https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Strings</a></p>
+                <p class="slide_tinytext">- stackoverflow post referenced for additional background information about regarding using variables within strings: <a href="https://stackoverflow.com/questions/3304014/how-to-interpolate-variables-in-strings-in-javascript-without-concatenation" target="_blank">https://stackoverflow.com/questions/3304014/how-to-interpolate-variables-in-strings-in-javascript-without-concatenation</a></p>
+                <p class="slide_tinytext">- mozilla documentation referenced to understand the parseInt function and this line of code and its parameters "let currSelYear = parseInt(e.target.value, 10);": <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt</a></p>
+                <p class="slide_tinytext">- mozilla documentation referenced to understand the indexOf function: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf</a></p>
+                <p class="slide_tinytext">- mapbox documentation source 1 referenced to update the current map according to the year selected: <a href="https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/" target="_blank">https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/</a></p>
+                <p class="slide_tinytext">- stackoverflow post source 2 referenced to update the current map according to the year selected: <a href="https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data" target="_blank">https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data</a></p>
+                <p class="slide_tinytext">- mapbox documentation referenced to edit the offset property value and add the easing and animate properties to make side panel appear and disappear faster and smoother: <a href="https://docs.mapbox.com/mapbox-gl-js/api/properties/" target="_blank">https://docs.mapbox.com/mapbox-gl-js/api/properties/</a></p>
+                <p class="slide_tinytext">- stackoverflow post referenced to add and remove classes from "buttons" or map tabs: <a href="https://stackoverflow.com/questions/507138/how-to-add-a-class-to-an-html-element-with-javascript" target="_blank">https://stackoverflow.com/questions/507138/how-to-add-a-class-to-an-html-element-with-javascript</a></p>
+
+            </div>
+
             <h5>AI Use Disclosure</h5>
             <p class="slide_tinytext">TODO: put ai disclosure thing here with the prompts we used and maybe screenshots if we have them?</p>
         </div>
