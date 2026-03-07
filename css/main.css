@@ -227,7 +227,7 @@ https://www.w3schools.com/css/css_navbar.asp
 https://www.w3schools.com/css/css_navbar_vertical.asp 
 https://www.w3schools.com/css/css_navbar_horizontal.asp */
 
-ul {
+.maptabs {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -242,7 +242,7 @@ ul {
   float: left;
 } */
 
-ul li a {
+.maptabs li a {
   display: block;
   color: white;
   text-align: center;
@@ -251,7 +251,7 @@ ul li a {
   float: left;
 }
 
-ul li a:hover {
+.maptabs li a:hover {
   background-color: #989898;
   color: rgb(255, 255, 255);
   text-decoration: underline;
