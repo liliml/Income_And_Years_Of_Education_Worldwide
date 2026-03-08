@@ -6,6 +6,7 @@ let yearsRange = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 20
 //This variable will change as the user moves the slider to select different years and show the data for that year.
 let currentYear = yearsRange[0]; //default is show data for year 2000 when the page is loaded: yearsRange[0] so year is 2000.
 
+let lnglat = null; //global var for long lat alter
 
 //Referenced this source for time slider: https://docs.mapbox.com/mapbox-gl-js/example/timeline-animation/
 //Function for year selected on time slider
@@ -95,8 +96,8 @@ const incomeColors = ['#f2f0f7','#cbc9e2','#9e9ac8','#756bb1','#54278f','#3f007d
 const schoolingBreaks = [0, 3, 6, 9, 12];
 const schoolingColors = ['#edf8fb','#b2e2e2','#66c2a4','#2ca25f','#006d2c'];
 
-// const combinedataBreaks = [0, 1, 2, 3];
-// const combinedataColors = ['#ff0800','#ff6f00','#d4ff00'];
+const combinedataBreaks = [0, 2000, 5000, 10000, 20000, 40000];
+const combinedataColors = ['#005eff','#0a0079','#ff00d9','#00ffbb','#ffd000','#ff0000'];
 
 // create the legend object and anchor it to the html element with id legend.
 const legend = document.getElementById('legend');
@@ -151,12 +152,12 @@ async function loadData() {
                 [
                     "step",
                     ["get", "INCOME"],
-                    incomeColors[0], incomeBreaks[1],
-                    incomeColors[1], incomeBreaks[2],
-                    incomeColors[2], incomeBreaks[3],
-                    incomeColors[3], incomeBreaks[4],
-                    incomeColors[4], incomeBreaks[5],
-                    incomeColors[5]
+                    combinedataColors[0], combinedataBreaks[1],
+                    combinedataColors[1], combinedataBreaks[2],
+                    combinedataColors[2], combinedataBreaks[3],
+                    combinedataColors[3], combinedataBreaks[4],
+                    combinedataColors[4], combinedataBreaks[5],
+                    combinedataColors[5]
                 ]
             ],
                 "fill-opacity": 0.8,
@@ -169,6 +170,7 @@ async function loadData() {
             id: "income-layer",
             type: "fill",
             source: "world",
+            layout: { visibility: "none" },
             paint: {
             "fill-color": [
                 "case",
@@ -243,6 +245,17 @@ async function loadData() {
             map.getSource('world').setData(`assets/${currentYear}/merged_${currentYear}.geojson`); //update the map source of 'world' to show the data for the selected year.
 
             filterBy(currSelYear);
+
+            console.log("lnglat", lnglat);
+            console.log("lng", lnglat[0]);
+            console.log("lat", lnglat[1])
+            if (lnglat != null) {
+                lng = lnglat[0];
+                lat = lnglat[1];
+                // console.log("curr lnglat", lnglat);
+            map.fire("click", {point: map.project([lng, lat]), lngLat: lng, lat});
+            }
+
         });
         //TESTING ADDING CALL filterBy FUNCTION TO MAP TO CHANGE YEAR VALUE TO SHOW DIFF DATA!
 
@@ -280,6 +293,7 @@ async function loadData() {
             document.getElementById("mySidepanel").style.height = "100%";
             document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
 
+
             // document.getElementById("legend").style.visibility = "visible"; //need this to make legend appear quicker
             
             if (typeof (map.getSource('world')) == 'undefined') { //if the map source 'world' does not exist
@@ -290,6 +304,9 @@ async function loadData() {
             } 
             document.getElementById("cover").style.visibility = "hidden"; // Hide the cover page
             document.getElementById("mySidepanel").style.visibility = "visible"; //show side panel
+            
+            console.log("active layer?:", activeLayer);
+
         } 
          
     }
@@ -298,6 +315,7 @@ async function loadData() {
     // 11. This function performs when a scene exists the storyboard
     function handleSceneExit(response) {
         var index = response.index;
+        closeNav(); //close the nav smoothly with animation
 
         if (index === 0) { //NOTE: "getLayer" uses the MAP ID FROM THE map.addlayer FUNCTION!!!
             //ORIGINAL BELOW:
@@ -307,21 +325,8 @@ async function loadData() {
             //     map.removeLayer('schooling-layer');
             // }
             //TESTING BELOW:
-            if (map.getLayer("income-layer")) {
-                map.removeLayer('combined-layer');
-                map.removeLayer('schooling-layer');
-                // map.addLayer('income-layer');
-            } else if (map.getLayer("schooling-layer")) {
-                map.removeLayer('combined-layer');
-                // map.addLayer('schooling-layer');
-                map.removeLayer('income-layer');
 
-            } else if (map.getLayer("combined-layer")) {
-                // map.addLayer('combined-layer');
-                map.removeLayer('schooling-layer');
-                map.removeLayer('income-layer');
 
-            }
 
 
             //ORGINAL BELOW
@@ -330,6 +335,7 @@ async function loadData() {
             // } else {
             // document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
             // }
+
             //TESTING BELOW TO MAKE MAP REAPPEAR
             if (response.direction == 'down') { 
             document.getElementById("cover").style.visibility = "visible"; // when you scroll down, the cover page will be hided.
@@ -341,6 +347,7 @@ async function loadData() {
             //document.getElementById("map").style.visibility = "visible";
             // document.getElementById("cover").style.visibility = "visible";    
             }
+
         } 
     }
     // TESTING!!!
@@ -350,6 +357,7 @@ async function loadData() {
 }
 
 loadData();
+
 
 //Referenced this sources for code to add and remove classes from "buttons": https://stackoverflow.com/questions/507138/how-to-add-a-class-to-an-html-element-with-javascript
 //for button element ids "btn-combined", "btn-income", "btn-schooling"  
@@ -365,10 +373,14 @@ document.getElementById("btn-combinedata").addEventListener("click", () => {
     map.setLayoutProperty("combined-layer", "visibility", "visible"); //NOTE: THESE LAYERS ARE THE IDs FROM ABOVE WHEN IMPORTING LAYERS!
     map.setLayoutProperty("income-layer", "visibility", "none");
     map.setLayoutProperty("schooling-layer", "visibility", "none");
-    updateLegend("schooling"); //TODO: WILL FIX THIS LATER, FOR TESTING PURPOSES LEAVING AS IS
+    //updateLegend("schooling"); //TODO: WILL FIX THIS LATER, FOR TESTING PURPOSES LEAVING AS IS
+    document.getElementById("legend").style.visibility = "none";
     document.getElementById("btn-combinedata").classList.add("active");
     document.getElementById("btn-schooling").classList.remove("active");
     document.getElementById("btn-income").classList.remove("active");
+
+    //TESTING
+
 });
 
 document.getElementById("btn-schooling").addEventListener("click", () => {
@@ -376,10 +388,14 @@ document.getElementById("btn-schooling").addEventListener("click", () => {
     map.setLayoutProperty("combined-layer", "visibility", "none");
     map.setLayoutProperty("income-layer", "visibility", "none");
     map.setLayoutProperty("schooling-layer", "visibility", "visible");
+    document.getElementById("legend").style.visibility = "visible";
     updateLegend("schooling");
     document.getElementById("btn-combinedata").classList.remove("active");
     document.getElementById("btn-schooling").classList.add("active");
     document.getElementById("btn-income").classList.remove("active");
+
+    //TESTING
+
 });
 
 document.getElementById("btn-income").addEventListener("click", () => {
@@ -387,21 +403,48 @@ document.getElementById("btn-income").addEventListener("click", () => {
     map.setLayoutProperty("combined-layer", "visibility", "none");
     map.setLayoutProperty("income-layer", "visibility", "visible");
     map.setLayoutProperty("schooling-layer", "visibility", "none");
+    document.getElementById("legend").style.visibility = "visible";
     updateLegend("income");
     document.getElementById("btn-combinedata").classList.remove("active");
     document.getElementById("btn-schooling").classList.remove("active");
     document.getElementById("btn-income").classList.add("active");
+
+    //TESTING
+
 });
+
+// function clickfunc() {
+
+// }
 
 
 map.on("click", (e) => {
     
+    // map.addSource("world", {
+    //     type: "geojson",
+    //     data: worldData
+    // });
+
     let features = map.queryRenderedFeatures(e.point, {
         layers: ["combined-layer", "income-layer", "schooling-layer"]
     });
+    console.log("current clicked active layer?:", activeLayer);
 
     if (!features.length) return;
 
+    console.log("us features", features[0].geometry.coordinates)
+    
+    //TEST AREA
+    // if (features[0].geometry.coordinates[0][0][0][0][0] != null) { //check for multipolygon which can use more then 3 []
+    //     lnglat = features[0].geometry.coordinates[0][0][0][0][0] //SPECIFICALLY FOR US MULTIPOLYGON SINCE IS NOT JUST US, ALSO IS HAWAII AND OTHER ARES!
+    // } else {
+    //     lnglat = features[0].geometry.coordinates[0][0][0]
+    // }
+    //TEST AREA
+
+
+    lnglat = features[0].geometry.coordinates[0][0][0]; //layer, then ..., then. update the global variable  
+    console.log("curr lnglat", lnglat);
     let props = features[0].properties;
 
     let income = clean(parseFloat(props.INCOME));
@@ -413,6 +456,13 @@ map.on("click", (e) => {
 
     generateChart(income, schooling);
 
+    // if (activeLayer == "schooling") {
+
+    // } else if (activeLayer == "income") {
+
+    // } else {
+        
+    // }
     // Popup at clicked point
     new mapboxgl.Popup()
         .setLngLat(e.lngLat)
@@ -467,17 +517,18 @@ function generateChart(income, schooling) {
             bindto: "#chart",
             data: {
                 columns: [
-                    ["Income", income || 0],
+                    ["Income ($1000)", income / 1000 || 0], //divide by 1000 to make education more visible
                     ["Schooling", schooling || 0]
                 ],
                 type: "bar",
                 colors: {
-                    Income: "#54278f",
+                    "Income ($1000)": "#54278f",
                     Schooling: "#2ca25f"
                 }
             },
             tooltip: {
                 format: {
+                    
                     value: function (value) {
                         return value === 0 ? "No Data" : value;
                     }
@@ -560,15 +611,24 @@ document.getElementById("reset").addEventListener("click", () => {
 // document.getElementById("mySidepanel").style.width = "400px";
 // document.getElementById("mySidepanel").style.height = "100%";
 
+
 /* Set the width and heigh of the sidebar (show it) */
 function openNav() {
-  document.getElementById("mySidepanel").style.width = "470px";
-  document.getElementById("mySidepanel").style.height = "100%";
+    document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
+    document.getElementById("mySidepanel").style.width = "470px";
+    document.getElementById("mySidepanel").style.height = "100%";
+    //line below hides nav button and makes invisible
+
+    document.getElementsByClassName("openbtn")[0].style.visibility = "hidden"; //have to select first instacne of class opnbutton since is an array (there can be multiple opnbutton elemnts with that class name)
+
 }
 
 /* Set the width of the sidebar to 0 (hide it) */
 function closeNav() {
-  document.getElementById("mySidepanel").style.width = "0";
+    document.getElementById("mySidepanel").style.padding = "0px 0px 0px 0px"; //remove left padding to remove black bar on left 
+    document.getElementById("mySidepanel").style.width = "0";
+    //line below puts nav button back and makes visible
+    document.getElementsByClassName("openbtn")[0].style.visibility = "visible"; //have to select first instacne of class opnbutton since is an array (there can be multiple opnbutton elemnts with that class name)
 }
 
 

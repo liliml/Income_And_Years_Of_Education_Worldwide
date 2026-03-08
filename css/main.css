@@ -333,6 +333,8 @@ https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp */
   padding: 10px 15px;
   border: none;
   /* position: top left; */
+  /* initially hide menu */
+  visibility: hidden; 
 }
 
 .openbtn:hover {
