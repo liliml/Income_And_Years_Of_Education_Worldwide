@@ -27,9 +27,6 @@
 </head>
 <body>
 
-    <!-- <section id="cover">
-    </section> -->
-
     <!-- Background image source: https://secretseattle.co/university-of-washington-ranking/ -->
 
     <!-- Section 1/Slide 1 (Cover/Intro): Section below for cover or initial view of project with title + group number + group member names -->
@@ -113,23 +110,10 @@
                     https://www.w3schools.com/css/css_navbar.asp 
                     https://www.w3schools.com/css/css_navbar_vertical.asp 
                     https://www.w3schools.com/css/css_navbar_horizontal.asp -->
-                    <ul class="maptabs">
-                        <!-- ORINGINAL -->
-                        <!-- <li class="active" id="btn-combineddata"><a href="./index.html">Combined Data</a></li>
-                        <li id="btn-schooling"><a href="./education.html">Education</a></li>
-                        <li id="btn-income"><a href="./income.html">Income</a></li> -->
-    
+                    <ul class="maptabs">    
                         <li class="toggle-btn active" id="btn-combinedata">Combined Data</li>
                         <li class="toggle-btn" id="btn-schooling">Education</li>
                         <li class="toggle-btn" id="btn-income">Income</li>
-    
-                        
-                        <!-- Layer Toggle Buttons -->
-                        <!-- <div id="layer-buttons">
-                            <span class="toggle-btn active" id="btn-income">Income</span>
-                            <span class="toggle-btn" id="btn-schooling">Schooling</span>
-                        </div> -->
-    
                     </ul>
     
                     <!-- Country Info -->
@@ -141,14 +125,6 @@
                     <div id="chart"></div>
     
                     <!-- Referenced this source for code and info about creating a slider: https://docs.mapbox.com/mapbox-gl-js/example/timeline-animation/ -->
-                    <!-- ORINGAL BELOW -->
-                    <!-- <div id="slider_div">
-                        <h2>Showing Data for Year: <label id="largeTextSliderValue"></label>
-                            <input id="slider" type="range" min="2000" max="2021" step="1" value="2000"> 
-                            <label id="yearSliderValue"></label> 
-                        </h2>
-                    </div> -->
-                    
                     <div id="slider_div">
                         <!--HAVE TO HAVE THIS LINE COMMENTED OUT BELOW THAT WAS PUT INTO "h2" LINE OR DATA FAILS TO CHANGE WITH SLIDER! this line says what year is selected with yearSliderValue id, the selected year value will be shwon and filled in using javascript-->
                         <!-- <label id="yearSliderValue"></label>  -->
@@ -162,62 +138,13 @@
                         This smart dashboard visualizes global average income (in USD converted by 2024 rate) and average years of schooling (for adults) in 2000 using
                         interactive choropleth maps. Use the buttons above to switch between income and schooling layers.
                     </div>
-    
                 </div>
     
-                <!-- <button class="openbtn" onclick="openNav()">&#9776;</button> -->
-    
             </div>
     
-            <!-- Map + Legend -->
+            <!-- Map -->
             <div id="map"></div>
-            <!-- <div id="legend"></div> -->
         </article>
-
-        <!-- <article class="scene" data-scene="1">
-            <h2>STEP 2: Loading Points</h2>
-        </article>
-        
-        <article class="scene" data-scene="2">
-            <h2>STEP 3: Relocate to Place A (Seattle)</h2>
-        </article>
-        
-        <article class="scene" data-scene="3">
-            <h2>STEP 4: Relocate to Place B (Portland)</h2>
-        </article>
-        
-        <article class="scene" data-scene="4">
-            <h2>STEP 5: Text Script</h2>
-            <p>This section shows where active research is happening, and on what topics to communicate on-going nature of
-                scientific learning. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                Aenean massa.
-                Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
-                ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla
-                vel, aliquet nec,
-                vulputate eget, arcu. In enim justo, rhoncus ut, imperdet a, venenatis vitae, justo. Nullam dictum felis eu pede
-                mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate.
-            </p>
-            <hr>
-            <div>
-               
-                <p><i class="bi bi-person"></i> <span>2,823</span>
-                </p>
-                <p><i class="bi bi-map"></i> <span>3,520</span>
-                </p>
-            </div>
-        </article> -->
-        
-        <!-- <article class="scene" data-scene="5">
-            <h2>STEP 6: Image </h2>
-            <img src="img/portland.jpg"></img>
-            </article>
-            <article class="scene fullscreen" data-scene="6">
-            <h2>STEP 7: Ending Page</h2>
-        </article> -->
-
-        <!-- TESTING SECTION BELOW OF MAIN MAPS FROM MAIN PROTOTYPE HERE WITH THE FUNCTIONAL TABS TO SWITCH MAPS -->
-        
-    
     </section>
 
     <!-- Slide 6/Section 6: About the Data (Data sources and why we chose them what the data shows, the years range, etc) -->

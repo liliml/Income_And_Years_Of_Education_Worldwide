@@ -13,60 +13,43 @@ let lnglat = null; //global var for long lat alter
 function filterBy(yearPassedIn) { //NOTE: yearPassedIn is a parameter, and is a year, can be currentYear, 
 //but can change, later see filterBy function call and updating the slider and such in the code
     console.log("current year parameter passed in:", yearPassedIn);
-    
-    //const filters = ['==', 'currentYear', currentYear];
-    //map.setFilter('earthquake-circles', filters);
-    //map.setFilter('earthquake-labels', filters);
-
-    //ORGINAL BELOW
-    // // Set the label to show current selected year for title for slider (see largeTextSliderValue id in index.html in the slider div)
-    // document.getElementById('largeTextSliderValue').textContent = yearsRange[yearPassedIn];
-    // // Set the label to show current selected year (see yearSliderValue id in index.html in the slider div)
-    // document.getElementById('yearSliderValue').textContent = yearsRange[yearPassedIn];
-
-    //TEST VERSION:
     // Set the label to show current selected year for title for slider (see largeTextSliderValue id in index.html in the slider div)
     // document.getElementById('largeTextSliderValue').innerHTML = yearPassedIn;
     // Set the label to show current selected year (see yearSliderValue id in index.html in the slider div)
     document.getElementById('yearSliderValue').innerHTML = yearPassedIn;
-
     document.getElementById('title').innerHTML = `Global Income & Schooling (${yearPassedIn})`; //update title in side panel to show textoftitle + (current year here)
-
 }
 
 
-// 1. Declare the maps, script panels, and different thematic layers.
-// ORGINAL: let map, scriptPanel = scrollama(), countiesLayer, cellTowersLayer;
+// Declare the maps, script panels, and different thematic layers.
 let scriptPanel = scrollama();
 
-// 2. Initialize the layout.
+// Initialize the layout.
 history.scrollRestoration = "manual"; // make sure the geo-narrative will be scrolled to the cover page even after a page refresh.
 window.scrollTo(0, 0); // scroll the geo-narrative to the coverpage
 adjustStoryboardlSize(); // force a browser window resize.
 window.addEventListener("resize", adjustStoryboardlSize); // ask the browser window listen to the resize event, thereby force a viewport resize whenever adjusting the window size.
 
 
-// 3. Define Generic window resize listener event
+// Define Generic window resize listener event
 function adjustStoryboardlSize() {
 
     const scenes = document.getElementsByClassName("scene");
-    //AM NOT USING STORYBOARD SECTION OR ID SO COMMENTED THIS OUT!: const storyboard = document.getElementById("storyboard");
 
-    // 3.1 determine the height of each scene element
+    // determine the height of each scene element
     let sceneH = Math.floor(window.innerHeight * 0.75);
     for (const scene of scenes) {
         scene.style.height = sceneH + "px";
     }
     
-    //NOTE: THIS HAS TO BE COMMENTED OUT OR THE MAP WILL NOT SHOW!!!! 
-    // 3.2 determin the height of the storyboard.
+    // determine the height of the storyboard.
     let storyboardHeight = window.innerHeight;
     let storyboardMarginTop = (window.innerHeight - storyboardHeight) / 2;
 
     storyboard.style.height = storyboardHeight + "px";
     storyboard.style.top = storyboardMarginTop + "px"
 
-    // 3.3 tell scrollama/script panel to update new element dimensions
+    // tell scrollama/script panel to update new element dimensions
     scriptPanel.resize();
 }
 
@@ -103,21 +86,25 @@ const combinedataColors = ['#005eff','#0a0079','#ff00d9','#00ffbb','#ffd000','#f
 const legend = document.getElementById('legend');
 
 function updateLegend(type) {
-    let breaks = type === "income" ? incomeBreaks : schoolingBreaks;
-    let colors = type === "income" ? incomeColors : schoolingColors;
-
-    let labels = [`<strong>${type === "income" ? "Avg Yearly Income (USD)" : "Avg Years Schooling"}</strong>`];
-
-    for (let i = 0; i < breaks.length - 1; i++) {
-        labels.push(`
-            <p class="break">
-                <span class="dot" style="background:${colors[i]}; width:18px; height:18px;"></span>
-                <span class="dot-label">${breaks[i]} – ${breaks[i+1]}</span>
-            </p>
-        `);
+    if (type == "combinedata") {
+        document.getElementById("legend").style.visibility = "hidden";
+    } else {
+        let breaks = type === "income" ? incomeBreaks : schoolingBreaks;
+        let colors = type === "income" ? incomeColors : schoolingColors;
+    
+        let labels = [`<strong>${type === "income" ? "Avg Yearly Income (USD)" : "Avg Years Schooling"}</strong>`];
+    
+        for (let i = 0; i < breaks.length - 1; i++) {
+            labels.push(`
+                <p class="break">
+                    <span class="dot" style="background:${colors[i]}; width:18px; height:18px;"></span>
+                    <span class="dot-label">${breaks[i]} – ${breaks[i+1]}</span>
+                </p>
+            `);
+        }
+    
+        legend.innerHTML = labels.join('');
     }
-
-    legend.innerHTML = labels.join('');
 }
 
 function clean(v) {
@@ -139,8 +126,7 @@ async function loadData() {
             data: worldData
         });
 
-        //NOTE: IS FOR TESTING COMBINED LAYER CHANGE THIS LATER!!!
-        // "COMBINED LAYER" choropleth
+        // combined layer choropleth
         map.addLayer({
             id: "combined-layer",
             type: "fill",
@@ -191,8 +177,6 @@ async function loadData() {
             }
         });
 
-
-        
         // Schooling choropleth
         map.addLayer({
             id: "schooling-layer",
@@ -220,13 +204,12 @@ async function loadData() {
         });
 
 
-        //TESTING ADDING CALL filterBy FUNCTION TO MAP TO CHANGE YEAR VALUE TO SHOW DIFF DATA!
+        // filterBy function used to cahnge year value to show different data
         // Set filter to year 2000 (0 is an index, here it is 0 and is year 2000). 
         // Am using currentYear variable here, is set to index 0 aka year 2000, see code at top of this file
         filterBy(currentYear);
         //REMINDER: currentYear is a GLOBAL VARIABLE (see code at top of this file where it is defined and declared)
         document.getElementById('slider').addEventListener('input', (e) => { 
-            //console.log("value of e:", e);
             let currSelYear = parseInt(e.target.value, 10); //create currSelYear variable which gets timeslider value of the year. 10 in this case means use base 10
             //to understand line above and parseInt function, used this reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
             console.log("currentYear value from line above in code:", currSelYear);
@@ -235,10 +218,8 @@ async function loadData() {
             currentYear = yearsRange[yearsRange.indexOf(currSelYear)] //update currentYear variable to be the index of the selected year, so that it can be used in the filterBy function to show the data for that year. 
             // indexOf function gets index of the selected year from yearsRange array. 
             // Referenced this source for indexOf function: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
-            //
-            console.log("currentYear variable after update:", currentYear);
 
-            //TESTING BELOW, ATTEMPTING TO RELOAD MAP SINCE MAP ISNT' UPDATING AND GETTING CALLED AGAIN AS DATA CHAANGES:
+            //Reloads and updates map as data changes for the selected year:
             //Referenced the following sources to update the map according to the year selected:
             //https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
             //https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data
@@ -252,20 +233,14 @@ async function loadData() {
             if (lnglat != null) {
                 lng = lnglat[0];
                 lat = lnglat[1];
-                // console.log("curr lnglat", lnglat);
             map.fire("click", {point: map.project([lng, lat]), lngLat: lng, lat});
             }
 
         });
-        //TESTING ADDING CALL filterBy FUNCTION TO MAP TO CHANGE YEAR VALUE TO SHOW DIFF DATA!
-
-
-        updateLegend("income");
+        updateLegend("combinedata");
     });
 
-
-    // TESTING!!!
-    // 9. Initialize the script panel
+    // Initialize the script panel
     //Referenced this source make side panel appear faster editing offset property value, adding the easing property, and adding the animate property to make the side panel appear and disappear smoother: https://docs.mapbox.com/mapbox-gl-js/api/properties/
     scriptPanel.setup({
         step: ".scene", // all the scenes.
@@ -277,24 +252,15 @@ async function loadData() {
         .onStepEnter(handleSceneEnter)
         .onStepExit(handleSceneExit);
 
-    // 10. This function performs when a scene enters the storyboard
+    // This function performs when a scene enters the storyboard
     function handleSceneEnter(response) {
         var index = response.index; // capture the id of the current scene. 
         if (index === 0) { // When enter the first scene
-            // map.flyTo({
-            //     center: [0,20],
-            //     zoom: 1.2,
-            //     pitch: 0,
-            //     speed: 0.5
-            // }); // fly to a new location
 
             // // two lines below are used to make the side panel show by default
             document.getElementById("mySidepanel").style.width = "470px";
             document.getElementById("mySidepanel").style.height = "100%";
             document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
-
-
-            // document.getElementById("legend").style.visibility = "visible"; //need this to make legend appear quicker
             
             if (typeof (map.getSource('world')) == 'undefined') { //if the map source 'world' does not exist
                 map.addSource('world', {
@@ -304,56 +270,26 @@ async function loadData() {
             } 
             document.getElementById("cover").style.visibility = "hidden"; // Hide the cover page
             document.getElementById("mySidepanel").style.visibility = "visible"; //show side panel
-            
-            console.log("active layer?:", activeLayer);
-
         } 
          
     }
 
-    //*****************TODO: FIX CODE HERE AFTER FIXING LINE 333 SECTION */
-    // 11. This function performs when a scene exists the storyboard
+    // This function performs when a scene exists the storyboard
     function handleSceneExit(response) {
         var index = response.index;
         closeNav(); //close the nav smoothly with animation
 
         if (index === 0) { //NOTE: "getLayer" uses the MAP ID FROM THE map.addlayer FUNCTION!!!
-            //ORIGINAL BELOW:
-            // if (map.getLayer("income-layer")) {
-            //     map.removeLayer('income-layer');
-            // } else if (map.getLayer("schooling-layer")) {
-            //     map.removeLayer('schooling-layer');
-            // }
-            //TESTING BELOW:
-
-
-
-
-            //ORGINAL BELOW
-            // if (response.direction == 'down') { 
-            // document.getElementById("cover").style.visibility = "hidden"; // when you scroll down, the cover page will be hided.
-            // } else {
-            // document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
-            // }
-
-            //TESTING BELOW TO MAKE MAP REAPPEAR
+            //makes map reappear as needed when scrolling up and down to and past map scene
             if (response.direction == 'down') { 
             document.getElementById("cover").style.visibility = "visible"; // when you scroll down, the cover page will be hided.
             document.getElementById("mySidepanel").style.visibility = "hidden"; //hide side panel
             } else if (response.direction == 'up') {
             document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
             document.getElementById("mySidepanel").style.visibility = "hidden"; //hide side panel
-            } else {
-            //document.getElementById("map").style.visibility = "visible";
-            // document.getElementById("cover").style.visibility = "visible";    
-            }
-
+            } 
         } 
     }
-    // TESTING!!!
-
-
-
 }
 
 loadData();
@@ -364,23 +300,16 @@ loadData();
 //in the two seciotns below when getting the elments add class to make button appear in the "active" color 
 //and remove "active" class from the other two ids so they are not shown in the "active" color
 //see added 3 lines below in each code chunk below the updateLegend line
-
-//NOTE AND TODO AND FIX LATER!!!: FOR THE COMBINEDATA LAYER, AM TEMOPORARILY SHOWING THE INCOME LAYER!!!
-
-//WEIRD ERROR, FOR NOW AM LEAVING COMMENTED OUT, UNCOMMENT AND VIEW CONSOLE TO SEE AND ALSO MAKES THE SIDE PANEL DISAPPEAR???
 document.getElementById("btn-combinedata").addEventListener("click", () => {
     activeLayer = "combinedata";
     map.setLayoutProperty("combined-layer", "visibility", "visible"); //NOTE: THESE LAYERS ARE THE IDs FROM ABOVE WHEN IMPORTING LAYERS!
     map.setLayoutProperty("income-layer", "visibility", "none");
     map.setLayoutProperty("schooling-layer", "visibility", "none");
-    //updateLegend("schooling"); //TODO: WILL FIX THIS LATER, FOR TESTING PURPOSES LEAVING AS IS
     document.getElementById("legend").style.visibility = "none";
     document.getElementById("btn-combinedata").classList.add("active");
     document.getElementById("btn-schooling").classList.remove("active");
     document.getElementById("btn-income").classList.remove("active");
-
-    //TESTING
-
+    //NOTE: no updateLegend call as combined data layer doesn't use a legend
 });
 
 document.getElementById("btn-schooling").addEventListener("click", () => {
@@ -393,9 +322,6 @@ document.getElementById("btn-schooling").addEventListener("click", () => {
     document.getElementById("btn-combinedata").classList.remove("active");
     document.getElementById("btn-schooling").classList.add("active");
     document.getElementById("btn-income").classList.remove("active");
-
-    //TESTING
-
 });
 
 document.getElementById("btn-income").addEventListener("click", () => {
@@ -408,42 +334,17 @@ document.getElementById("btn-income").addEventListener("click", () => {
     document.getElementById("btn-combinedata").classList.remove("active");
     document.getElementById("btn-schooling").classList.remove("active");
     document.getElementById("btn-income").classList.add("active");
-
-    //TESTING
-
 });
 
-// function clickfunc() {
-
-// }
-
-
+//click function for when you click on a country and a pop up appears + call chart function to show chart data
 map.on("click", (e) => {
-    
-    // map.addSource("world", {
-    //     type: "geojson",
-    //     data: worldData
-    // });
-
     let features = map.queryRenderedFeatures(e.point, {
         layers: ["combined-layer", "income-layer", "schooling-layer"]
     });
-    console.log("current clicked active layer?:", activeLayer);
 
     if (!features.length) return;
-
-    console.log("us features", features[0].geometry.coordinates)
     
-    //TEST AREA
-    // if (features[0].geometry.coordinates[0][0][0][0][0] != null) { //check for multipolygon which can use more then 3 []
-    //     lnglat = features[0].geometry.coordinates[0][0][0][0][0] //SPECIFICALLY FOR US MULTIPOLYGON SINCE IS NOT JUST US, ALSO IS HAWAII AND OTHER ARES!
-    // } else {
-    //     lnglat = features[0].geometry.coordinates[0][0][0]
-    // }
-    //TEST AREA
-
-
-    lnglat = features[0].geometry.coordinates[0][0][0]; //layer, then ..., then. update the global variable  
+    lnglat = features[0].geometry.coordinates[0][0][0];  
     console.log("curr lnglat", lnglat);
     let props = features[0].properties;
 
@@ -456,13 +357,6 @@ map.on("click", (e) => {
 
     generateChart(income, schooling);
 
-    // if (activeLayer == "schooling") {
-
-    // } else if (activeLayer == "income") {
-
-    // } else {
-        
-    // }
     // Popup at clicked point
     new mapboxgl.Popup()
         .setLngLat(e.lngLat)
@@ -479,37 +373,7 @@ map.on("click", (e) => {
         map.getSource('world').setData(`assets/${currentYear}/merged_${currentYear}.geojson`); //update the map source of 'world' to show the data for the selected year.
 });
 
-
-//ORGINAL FUNCTION
-// function generateChart(income, schooling) {
-
-//     if (chart) chart.destroy();
-
-//     chart = c3.generate({
-//         bindto: "#chart",
-//         data: {
-//             columns: [
-//                 ["Income", income || 0],
-//                 ["Schooling", schooling || 0]
-//             ],
-//             type: "bar",
-//             colors: {
-//                 Income: "#54278f",
-//                 Schooling: "#2ca25f"
-//             }
-//         },
-//         tooltip: {
-//             format: {
-//                 value: function (value) {
-//                     return value === 0 ? "No Data" : value;
-//                 }
-//             }
-//         },
-//         axis: {
-//             x: { type: "category", categories: [""] }
-//         }
-//     });
-// }
+//function to show the charts and get data values for it
 function generateChart(income, schooling) {
     if (activeLayer == "combinedata") { //first case for combined data
         if (chart) chart.destroy();
@@ -601,29 +465,22 @@ document.getElementById("reset").addEventListener("click", () => {
     map.flyTo({ zoom: 1.2, center: [0, 20] });
 });
 
-
 // Code section for side panel that opens and closes on click to view main panel
 // Referenced the following for side panel that opens and closes on click to view main panel: 
 // https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp
-// https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp-->
+// https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp
 
-// two lines below are used to make the side panel show by default
-// document.getElementById("mySidepanel").style.width = "400px";
-// document.getElementById("mySidepanel").style.height = "100%";
-
-
-/* Set the width and heigh of the sidebar (show it) */
+// Set the width and heigh of the sidebar (show it) 
 function openNav() {
     document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
     document.getElementById("mySidepanel").style.width = "470px";
     document.getElementById("mySidepanel").style.height = "100%";
     //line below hides nav button and makes invisible
-
     document.getElementsByClassName("openbtn")[0].style.visibility = "hidden"; //have to select first instacne of class opnbutton since is an array (there can be multiple opnbutton elemnts with that class name)
 
 }
 
-/* Set the width of the sidebar to 0 (hide it) */
+// Set the width of the sidebar to 0 (hide it)
 function closeNav() {
     document.getElementById("mySidepanel").style.padding = "0px 0px 0px 0px"; //remove left padding to remove black bar on left 
     document.getElementById("mySidepanel").style.width = "0";
