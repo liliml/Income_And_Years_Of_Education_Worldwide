@@ -102,7 +102,6 @@ https://www.w3schools.com/css/css_navbar_horizontal.asp */
 .toggle-btn {
   list-style-type: none;
   margin: 0;
-  padding: 0;
   overflow: hidden;
   background-color: #000000;
   font-weight: 800;
@@ -246,7 +245,7 @@ https://www.w3schools.com/css/css_navbar_horizontal.asp */
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 14px 16px; 
   text-decoration: none;
   float: left;
 }
@@ -302,7 +301,8 @@ https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp */
 
 /* The sidepanel links */
 .sidepanel a {
-  padding: 8px 8px 8px 32px;
+  
+  padding: 8px 8px 8px 32px;  
   text-decoration: none;
   font-size: 25px;
   color: #818181;
@@ -368,10 +368,110 @@ https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp */
   
 }
 
+/* Source referenced for slider section below: https://www.w3schools.com/howto/howto_js_rangeslider.asp */
 /* for slider on the map side panel, is mostly to create space via padding between text above and below the slider */
 #slider {
-  padding: 10px 0px 15px 0px; /* top, right, bottom, left is ordering of padding*/
+  padding: 20px 0px 15px 0px; /* top, right, bottom, left is ordering of padding*/
+  /* background-color: #ff6600; */
+  width: 75%;
+  /* -webkit-appearance: none; */
+  height: 20px;
+  /* background: #ffae00; */
+
 }
+
+/* slider styling other then padding, is for color and appearence */
+input {
+  --c: #f4ecbe81; /* active color */
+  --l: 8px; /* line thickness*/
+  --s: 30px; /* thumb size */
+  
+  width: 400px;
+  height: var(--s); /* needed for Firefox*/
+  --_c: color-mix(in srgb, var(--c), #000 var(--p,0%));
+  -webkit-appearance :none;
+  -moz-appearance :none;
+  appearance :none;
+  /* ORGINAL: background: linear-gradient(-90deg,#ababab 60%,#0000 0) 100%/8% calc(var(--l) - 1px) repeat-x; */
+  background: linear-gradient(#ababab) 100%/8% calc(var(--l) - 1px) repeat-x;
+  cursor: pointer;
+  overflow: hidden;
+}
+input:focus-visible,
+input:hover{
+  --p: 25%;
+}
+
+/* chromium */
+input[type="range" i]::-webkit-slider-thumb{
+  height: var(--s);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--_c);
+  border-image: linear-gradient(var(--_c) 0 0) 0 0 0 1/calc(50% - var(--l)/2) 0 calc(50% - var(--l)/2) 100vw/0 0 0 100vw;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: .3s;
+}
+/* Firefox */
+input[type="range"]::-moz-range-thumb {
+  height: var(--s);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--_c);
+  border-image: linear-gradient(var(--_c) 0 0) 0 0 0 1/calc(50% - var(--l)/2) 0 calc(50% - var(--l)/2) 100vw/0 0 0 100vw;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: .3s;
+}
+@supports not (color: color-mix(in srgb,red,red)) {
+  input {
+    --_c: var(--c);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* slider styling other then padding, is for color and appearence and uses slider class not id */
+/* .slider {
+  -webkit-appearance: none;
+  width: 75%;
+  height: 10px;
+  border-radius: 5px;  
+  background: #d3d3d3;
+
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+} */
+
+
+
+
+
+
 
 /* For tiny text under year slider on the map side panel */
 .yearslider_tinytext {
@@ -478,7 +578,7 @@ p {
   top: 32%;
   left: 50%;
   transform: translateX(-50%) translateY(-32%);
-  width: 50%;
+  width: 75%;
   color: #fff;
   padding: 2rem;
   border-radius: 5px;

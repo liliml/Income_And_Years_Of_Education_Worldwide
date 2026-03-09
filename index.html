@@ -23,6 +23,8 @@
     <!-- include c3.js to make charts. c3.js is built upon d3.js -->
     <script src="js/d3.js"></script>
     <script src="js/c3.min.js"></script>
+
+
     
 </head>
 <body>
@@ -129,7 +131,7 @@
                         <!--HAVE TO HAVE THIS LINE COMMENTED OUT BELOW THAT WAS PUT INTO "h2" LINE OR DATA FAILS TO CHANGE WITH SLIDER! this line says what year is selected with yearSliderValue id, the selected year value will be shwon and filled in using javascript-->
                         <!-- <label id="yearSliderValue"></label>  -->
                         <h2>Showing Data for Year: <label id="yearSliderValue"></label> <label id="largeTextSliderValue"></label>
-                            <input id="slider" type="range" min="2000" max="2021" step="1" value="2000"> <!--value is what the starting value is in this case the year 2000, will also start at this year by default-->
+                            <input id="slider" type="range" min="2000" max="2021" step="1" value="2000" style="--c: #f4ecbe81;--l: 6px;--w:20px;"> <!--value is what the starting value is in this case the year 2000, will also start at this year by default-->
                         </h2>
                     </div>
     
@@ -199,6 +201,8 @@
                 <p class="slide_tinytext">- w3schools source 1 referenced to create and style side panel that opens and closes on click: <a href="https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp" target="_blank">https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp</a></p>
                 <p class="slide_tinytext">- w3schools source 2 referenced to create and style side panel that opens and closes on click: <a href="https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp" target="_blank">https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp</a></p>
                 <p class="slide_tinytext">- w3schools source referenced for additional background and code on applying a background image to a webpage: <a href="https://www.w3schools.com/html/html_images_background.asp" target="_blank">https://www.w3schools.com/html/html_images_background.asp</a></p>
+                <p class="slide_tinytext">- w3schools source 1 referenced for slider styling: <a href="https://www.w3schools.com/howto/howto_js_rangeslider.asp" target="_blank">https://www.w3schools.com/howto/howto_js_rangeslider.asp</a></p>
+                <p class="slide_tinytext">- sitepoint source 2 referenced for slider styling: <a href="https://www.sitepoint.com/css-custom-range-slider/" target="_blank">https://www.sitepoint.com/css-custom-range-slider/</a></p>
 
                 <!-- Sources and references for main.js file -->
                 <p class="slide_tinytext">- mapbox documentation referenced for creating a time slider: <a href="https://docs.mapbox.com/mapbox-gl-js/example/timeline-animation/" target="_blank">https://docs.mapbox.com/mapbox-gl-js/example/timeline-animation/</a></p>
