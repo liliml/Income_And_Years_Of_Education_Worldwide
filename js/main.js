@@ -85,6 +85,10 @@ const combinedataColors = ['#005eff','#0a0079','#ff00d9','#00ffbb','#ffd000','#f
 // create the legend object and anchor it to the html element with id legend.
 const legend = document.getElementById('legend');
 
+
+
+
+//TESTING AREA FOR LEGEND    
 function updateLegend(type) {
     if (type == "combinedata") {
         document.getElementById("legend").style.visibility = "hidden";
@@ -93,19 +97,73 @@ function updateLegend(type) {
         let colors = type === "income" ? incomeColors : schoolingColors;
     
         let labels = [`<strong>${type === "income" ? "Avg Yearly Income (USD)" : "Avg Years Schooling"}</strong>`];
-    
+        
+        console.log("breaks array:", breaks);
+
+        // breaks.forEach((break_value, i) => { //break value is one of the breaks aka ranges of values in the legend key
+        //     console.log("break value:", break_value);
+        //     console.log("color value:", colors[i]);
+        //     const color = colors[i];
+        //     const item = document.createElement('div');
+        //     const key = document.createElement('span');
+        //     key.className = 'legend-key';
+        //     key.style.backgroundColor = color;
+        
+        //     const value = document.createElement('span');
+        //     value.innerHTML = `${break_value}`;
+        //     item.appendChild(key);
+        //     item.appendChild(value);
+        //     legend.innerHTML += legend.appendChild(item);
+        // });
+
         for (let i = 0; i < breaks.length - 1; i++) {
-            labels.push(`
-                <p class="break">
-                    <span class="dot" style="background:${colors[i]}; width:18px; height:18px;"></span>
-                    <span class="dot-label">${breaks[i]} – ${breaks[i+1]}</span>
-                </p>
-            `);
+            labels.push(
+                //div is "item" variable and span is "key" varible. Second span below is for "value" variable.
+                `<div>
+                    <span class="legend-key" style="background-color: ${colors[i]};"></span>
+                    <span>${breaks[i]}</span>
+                </div>`   
+            );
         }
+
+        // for (let i = 0; i < breaks.length - 1; i++) {
+        //     labels.push(`
+        //         <p class="break">
+        //             <span class="dot" style="background:${colors[i]}; width:18px; height:18px;"></span>
+        //             <span class="dot-label">${breaks[i]} – ${breaks[i+1]}</span>
+        //         </p>
+        //     `);
+        // }
     
         legend.innerHTML = labels.join('');
     }
 }
+//TESTING AREA FOR LEGEND
+
+
+
+
+// function updateLegend(type) {
+//     if (type == "combinedata") {
+//         document.getElementById("legend").style.visibility = "hidden";
+//     } else {
+//         let breaks = type === "income" ? incomeBreaks : schoolingBreaks;
+//         let colors = type === "income" ? incomeColors : schoolingColors;
+    
+//         let labels = [`<strong>${type === "income" ? "Avg Yearly Income (USD)" : "Avg Years Schooling"}</strong>`];
+    
+//         for (let i = 0; i < breaks.length - 1; i++) {
+//             labels.push(`
+//                 <p class="break">
+//                     <span class="dot" style="background:${colors[i]}; width:18px; height:18px;"></span>
+//                     <span class="dot-label">${breaks[i]} – ${breaks[i+1]}</span>
+//                 </p>
+//             `);
+//         }
+    
+//         legend.innerHTML = labels.join('');
+//     }
+// }
 
 function clean(v) {
     return v === -1 ? null : v;
@@ -306,6 +364,7 @@ document.getElementById("btn-combinedata").addEventListener("click", () => {
     map.setLayoutProperty("income-layer", "visibility", "none");
     map.setLayoutProperty("schooling-layer", "visibility", "none");
     document.getElementById("legend").style.visibility = "none";
+    updateLegend("combinedata");
     document.getElementById("btn-combinedata").classList.add("active");
     document.getElementById("btn-schooling").classList.remove("active");
     document.getElementById("btn-income").classList.remove("active");
