@@ -556,6 +556,23 @@ p {
   /* text-align: center; */
 }
 
+/* Referenced this source for using flexbox and aligning images: https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout */
+/* for multimedia div */
+#multimedia_div {
+  display: flex;
+  justify-content: center;
+  gap: 3rem; /* gap between images */
+}
+
+/* for multimedia slide images */
+.multimedia_images {
+  display: block;
+  height: 550px;
+  width: 500px;
+  padding: 20px 0px 20px 0px; /* top, right, bottom, left is ordering of padding*/
+  
+}
+
 .canvas-center {
   top: 50%;
   left: 50%;
