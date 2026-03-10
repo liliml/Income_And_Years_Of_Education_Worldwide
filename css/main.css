@@ -580,6 +580,23 @@ p {
   
 }
 
+/* Referenced this source for using flexbox and aligning images: https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout */
+/* for file structure div in about the data section */
+#filestructure_div {
+  display: flex;
+  justify-content: center;
+  gap: 3rem; /* gap between images */
+}
+
+/* for multimedia slide images */
+.filestructure_image {
+  display: block;
+  height: 450px;
+  width: 500px;
+  padding: 20px 0px 20px 0px; /* top, right, bottom, left is ordering of padding*/
+  
+}
+
 .canvas-center {
   top: 50%;
   left: 50%;

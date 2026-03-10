@@ -94,13 +94,10 @@
     <div id="map_div">
     </div>
     <section id="geonarrative">
-        <!-- NOTE: COMMENTED OUT SECTION BELOW FOR NOW, AM TESTING PUTTING MY OWN MAP FORMATTING HERE! -->
         <div id="storyboard">
             <div id="map"></div>
-
             <!-- NOTE: Line below was added to make the legend stick with the map -->
             <div id="legend"></div>
-
             <!-- referenced to make menu button appear in upper left of map: https://stackoverflow.com/questions/2301161/how-do-i-position-a-div-to-upper-left-of-page -->
             <button class="openbtn" onclick="openNav()" style="position: relative;">&#9776;</button>
         </div>
@@ -162,10 +159,8 @@
                         <p>
                             3. World Countries Generalized from ArcGIS Hub for country shapes and for merging to datasets: <a href="https://hub.arcgis.com/datasets/esri::world-countries-generalized" target="_blank">https://hub.arcgis.com/datasets/esri::world-countries-generalized</a>
                         </p>
-
                     </div>
                 </div>
-    
             </div>
     
             <!-- Map -->
@@ -173,6 +168,9 @@
         </article>
     </section>
 
+    <!-- Added empty section here to create more space between map and slides -->
+    <section id="cover">
+    </section>
     <!-- Slide 6/Section 6: About the Data (Data sources and why we chose them what the data shows, the years range, etc) -->
     <div id="aboutdata_div">
     </div>
@@ -180,20 +178,51 @@
         <div id="intro">
             <h1 class="slide_titletext">About the Data</h1>
             <h5>Data</h5>
-            <p class="slide_tinytext">About the data, why we chose it, what it shows, the years range, etc</p>
+
+            <p class="slide_tinytext">This project used three datasets. 
+                The dataset chosen to show the average years of education by country was a dataset from our world data called "years of schooliong". 
+                The dataset chosen to show income data was titled "adjusted net national income per capita" from the World Bank Group. 
+                The third dataset called "world countries generalized" was from arcgis, and was chosen for country shapes and for merging to the other datasets. 
+                The year range choosen was from 2000 to 2021 as it was the greatest range of data that was able to avoid the following problem: 
+                earlier and later data had incomplete entires or different numbers of countries which is not ideal when merging the inital schooling (education) and income data to the countries dataset.
+                These datasets were chosen as they were easy to work with and contained enough sufficient data, specifically for country names as the data file for the countries from arcgis had 252 countries, 
+                and we wanted the data to have the same number of rows when being merged to the countries dataset.       
+            </p>
+
+            
+            <h5>Data Cleaning Choices and Results</h5>
+            <p class="slide_tinytext">The orginal dataset ...(dataset name here) orginally contained the following columns.....(list and describe columns) </p>
+            <p class="slide_tinytext">The orginal dataset ...(dataset name here) orginally contained the following columns.....(list and describe columns) </p>
+            <p class="slide_tinytext">The orginal dataset ...(dataset name here) orginally contained the following columns.....(list and describe columns) </p>
+            <p class="slide_tinytext">When cleaning the data we chose to (discuss columns we decided to keep and why and what those columsn show and what the orginal columns in the data were)............... because.............. (explain how we didn't need certain columns and what we wanted to show initlally and why we have extra data files, and later realizing it would be faster to just load everything from one data file and that using additional data files would require addtional resources on the user's side which is not ideal as it makes the experience worse for them due to potential longer load times as more data is retrieved and loaded.)</p>
+            <p class="slide_tinytext">As a result of cleaning the data, the file structure ended up being as follows.... (put file structure and/or image here and explain it)</p>
+
+            <p class="slide_tinytext">After cleaning the dataset merged_year#.csv contained the following columns..... (list and describe columns) </p>
+            <p class="slide_tinytext">After cleaning the dataset schooling_year#.csv contained the following columns..... (list and describe columns) </p>
+            <p class="slide_tinytext">After cleaning the dataset income_year#.csv contained the following columns..... (list and describe columns) </p>
+
+            <div id="filestructure_div">
+                <img class="filestructure_image" src="./img/filestructure.png">
+            </div>
+            <p class="slide_tinytext">The image above shows a screenshot from Google Drive of sample set of data files that can be found in a folder for a year of data. In this case the sample set is of data from the year 2000</p>
+
+
             <h5>Data Cleaning Process</h5>
-            <p class="slide_tinytext">Discuss how we cleaned the data here, the process and choices we made and why, screenshots etc</p>
-            <h5>View Data</h5>
-            <p class="slide_tinytext">Put link to the data here in an unordered list, show before cleaning data and after and merged and such + orginal data sources + cleaned data folder, need to make it view only</p>
-        
-            Final Dataset Folder Post Cleaning Google Drive Link: https://drive.google.com/drive/folders/1dLkyqLmdP-t80cjHf4-kDiHQ1FnrYG1U?usp=drive_link
-        
+            <p class="slide_tinytext">Discuss how we cleaned the data here, the process and choices we made and why, screenshots etc.............. TODO SHOW CODE HERE AND FIGURE OUT HOW TO DO SO IN A NICE WAY (TODO, LOOK UP: SHOWING CODE SNIPITS IN HTML AND CSS)</p>
+            
+            <h5>View Data</h5>            
+            <p class="slide_tinytext" style="text-decoration: underline;">Datasets Before Cleaning:</p>
+            <p class="slide_tinytext">Average Years of Schooling Among Adults dataset from Our World in Data, which provides the average number of years adults aged 25 and older have spent in formal education: <a href="https://ourworldindata.org/grapher/years-of-schooling" target="_blank">https://ourworldindata.org/grapher/years-of-schooling</a></p>
+            <p class="slide_tinytext">Adjusted net national income per capita (current US$) from the World Bank Group, which provides comparable wage data (converted to USD using the 2024 rate) across many countries: <a href="https://data.worldbank.org/indicator/NY.ADJ.NNTY.PC.CD" target="_blank">https://data.worldbank.org/indicator/NY.ADJ.NNTY.PC.CD</a></p>
+            <p class="slide_tinytext">World Countries Generalized from ArcGIS Hub for country shapes and for merging to datasets: <a href="https://hub.arcgis.com/datasets/esri::world-countries-generalized" target="_blank">https://hub.arcgis.com/datasets/esri::world-countries-generalized</a></p>
+            <p class="slide_tinytext" style="text-decoration: underline;">Cleaned Data Folder:</p>
+            <p class="slide_tinytext">Final Dataset Folder Post Cleaning Google Drive Link: <a href="https://drive.google.com/drive/folders/1dLkyqLmdP-t80cjHf4-kDiHQ1FnrYG1U?usp=drive_link" target="_blank">https://drive.google.com/drive/folders/1dLkyqLmdP-t80cjHf4-kDiHQ1FnrYG1U?usp=drive_link</a></p>
         </div>
     </section>
 
-    <!-- Added empty section here ot create more space between map and slides -->
-    <!-- <section id="cover">
-    </section> -->
+    <!-- Added empty section here to create more space between slides -->
+    <section id="cover">
+    </section>
 
     <!-- Slide 7/Section 7: Acknowledgments + sources slide + AI disclosure slide + labs the project was based on -->
     <!-- <div id="acknoledgements_sources_div">
@@ -253,8 +282,9 @@
                 <p class="slide_tinytext">- mapbox documentation referenced to edit the offset property value and add the easing and animate properties to make side panel appear and disappear faster and smoother: <a href="https://docs.mapbox.com/mapbox-gl-js/api/properties/" target="_blank">https://docs.mapbox.com/mapbox-gl-js/api/properties/</a></p>
                 <p class="slide_tinytext">- stackoverflow post referenced to add and remove classes from "buttons" or map tabs: <a href="https://stackoverflow.com/questions/507138/how-to-add-a-class-to-an-html-element-with-javascript" target="_blank">https://stackoverflow.com/questions/507138/how-to-add-a-class-to-an-html-element-with-javascript</a></p>
                 
-                <!-- Sources for additional background -->
+                <!-- Sources for additional background and creating data files-->
                 <p class="slide_tinytext">- tax foundation article and charts related to education level and income: <a href="https://taxfoundation.org/blog/educational-attainment-drives-level-income/" target="_blank">https://taxfoundation.org/blog/educational-attainment-drives-level-income/</a></p>
+                <p class="slide_tinytext">- geojson.io used for checking data files after cleaning: <a href="https://geojson.io/#map=2/0/20" target="_blank">https://geojson.io/#map=2/0/20</a></p>
             </div>
 
             <h5>AI Use Disclosure</h5>
@@ -272,7 +302,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <h6>About</h6>
-                        <p class="text-justify"> GeoNarrative, also being referred to as storymap, or map-based storytelling, is an visualization genre that primarily utilizes a series of maps or other types of geovisualizations to narrate a geographical event or phenomenon. In addition to geovisualization, there will be other form of information like scripts, images, or videos. </p>
+                        <p class="text-justify">This project uses three interactive maps to explore and visualize the relationship between education and income (how average years of schooling correlates with annual wages) across different countries in the world. The maps also highlight broad global patterns as well as regional differences</p>
                     </div>
                     <div class="col-xs-6 col-md-3">
                         <h6>Project Sections</h6>
