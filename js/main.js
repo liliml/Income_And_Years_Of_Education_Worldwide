@@ -318,7 +318,7 @@ async function loadData() {
             // // two lines below are used to make the side panel show by default
             document.getElementById("mySidepanel").style.width = "470px";
             document.getElementById("mySidepanel").style.height = "100%";
-            document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
+            document.getElementById("mySidepanel").style.padding = "0px 0px 0px 0px"; //padding to left, 0px 
             
             if (typeof (map.getSource('world')) == 'undefined') { //if the map source 'world' does not exist
                 map.addSource('world', {
@@ -363,7 +363,7 @@ document.getElementById("btn-combinedata").addEventListener("click", () => {
     map.setLayoutProperty("combined-layer", "visibility", "visible"); //NOTE: THESE LAYERS ARE THE IDs FROM ABOVE WHEN IMPORTING LAYERS!
     map.setLayoutProperty("income-layer", "visibility", "none");
     map.setLayoutProperty("schooling-layer", "visibility", "none");
-    document.getElementById("legend").style.visibility = "none";
+    document.getElementById("legend").style.visibility = "hidden";
     updateLegend("combinedata");
     document.getElementById("btn-combinedata").classList.add("active");
     document.getElementById("btn-schooling").classList.remove("active");
@@ -441,12 +441,12 @@ function generateChart(income, schooling) {
             data: {
                 columns: [
                     ["Income ($1000)", income / 1000 || 0], //divide by 1000 to make education more visible
-                    ["Schooling", schooling || 0]
+                    ["Schooling (Avg Years)", schooling || 0]
                 ],
                 type: "bar",
                 colors: {
                     "Income ($1000)": "#54278f",
-                    Schooling: "#2ca25f"
+                    "Schooling (Avg Years)": "#2ca25f"
                 }
             },
             tooltip: {
@@ -468,11 +468,11 @@ function generateChart(income, schooling) {
             bindto: "#chart",
             data: {
                 columns: [
-                    ["Schooling", schooling || 0]
+                    ["Schooling (Avg Years)", schooling || 0]
                 ],
                 type: "bar",
                 colors: {
-                    Schooling: "#2ca25f"
+                    "Schooling (Avg Years)": "#2ca25f"
                 }
             },
             tooltip: {
@@ -531,7 +531,8 @@ document.getElementById("reset").addEventListener("click", () => {
 
 // Set the width and heigh of the sidebar (show it) 
 function openNav() {
-    document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
+    ///TESTING, THIS IS THE ORGINAL LINE, TEST LINE BELOW: document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
+    document.getElementById("mySidepanel").style.padding = "0px 0px 0px 0px"; //padding to left is 0px
     document.getElementById("mySidepanel").style.width = "470px";
     document.getElementById("mySidepanel").style.height = "100%";
     //line below hides nav button and makes invisible
