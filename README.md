@@ -6,7 +6,24 @@ Group 3: Lilian Law, Nina Jiang, Yijia Liu
 ## **Overview of Project:**
 This project uses three interactive maps to explore and visualize the relationship between education and income 
 (how average years of schooling correlates with annual wages) across different countries in the world. 
-The maps also highlight broad global patterns as well as regional differences.
+The maps also highlight broad global patterns as well as regional differences. The project can be viewed here: [https://liliml.github.io/Income_And_Years_Of_Education_Worldwide/](https://liliml.github.io/Income_And_Years_Of_Education_Worldwide/)
+
+## **Project Images:**
+Project Title Slide
+
+![Project title slide](/img/titleslide.png)
+
+Combined Data Map View
+
+![combined data map view](/img/combined.png)
+
+Education Data Map View
+
+![education data map view](/img/education.png)
+
+Income Data Map View
+
+![income data map view](/img/incomemap.png)
 
 ## **Maps:**
 The idea of this project is to make the connection between years of schooling (education) and adjusted net national income per capita (income) easy to see by using three maps, each being able to be viewed with different map tabs on a side panel of the map. The first map (combined data tab) is a map showing both education and income data for the countries for that year with the ability to click on a country to view data about the income and average years of schooling for that year in that country. This map also includes a time slider to select a year of data to display ranging from 2000 to 2021.
