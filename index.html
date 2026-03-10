@@ -179,14 +179,16 @@
             <h1 class="slide_titletext">About the Data</h1>
             <h5>Data</h5>
 
-            <p class="slide_tinytext">This project used three datasets. 
-                The dataset chosen to show the average years of education by country was a dataset from our world data called "years of schooliong". 
-                The dataset chosen to show income data was titled "adjusted net national income per capita" from the World Bank Group. 
-                The third dataset called "world countries generalized" was from arcgis, and was chosen for country shapes and for merging to the other datasets. 
-                The year range choosen was from 2000 to 2021 as it was the greatest range of data that was able to avoid the following problem: 
-                earlier and later data had incomplete entires or different numbers of countries which is not ideal when merging the inital schooling (education) and income data to the countries dataset.
-                These datasets were chosen as they were easy to work with and contained enough sufficient data, specifically for country names as the data file for the countries from arcgis had 252 countries, 
-                and we wanted the data to have the same number of rows when being merged to the countries dataset.       
+            <p class="slide_tinytext">
+            This project used three publicly available datasets. 
+            The dataset chosen to show the average years of education by country was a dataset from Our World Data called "average years of schooling" (average-years-of-schooling-among-adults.csv). 
+            The dataset chosen to show income data was titled "adjusted net national income per capita" (API_NY.ADJ.NNTY.PC.CD_DS2_en_csv_v2_7997.csv) from the World Bank Group. 
+            The third dataset called "world countries generalized" (World_Countries_(Generalized)_9029012925078512962.geojson) was from ArcGIS Hub, 
+            and was chosen for country shapes and for merging to the other datasets. 
+            The year range chosen was from 2000 to 2021 as it was the greatest range of data that was able to avoid the following problem: 
+            earlier and later data had incomplete entries or different numbers of countries which is not ideal when merging the initial schooling (education) and income data to the countries dataset. 
+            These datasets were chosen as they were easy to work with and contained sufficient data, specifically for country names as the data file for the countries from arcgis had 252 countries, 
+            and we wanted the data to have the same number of rows (or at least not missing too many countries) when being merged to the countries dataset.
             </p>
 
             
@@ -282,9 +284,10 @@
                 <p class="slide_tinytext">- mapbox documentation referenced to edit the offset property value and add the easing and animate properties to make side panel appear and disappear faster and smoother: <a href="https://docs.mapbox.com/mapbox-gl-js/api/properties/" target="_blank">https://docs.mapbox.com/mapbox-gl-js/api/properties/</a></p>
                 <p class="slide_tinytext">- stackoverflow post referenced to add and remove classes from "buttons" or map tabs: <a href="https://stackoverflow.com/questions/507138/how-to-add-a-class-to-an-html-element-with-javascript" target="_blank">https://stackoverflow.com/questions/507138/how-to-add-a-class-to-an-html-element-with-javascript</a></p>
                 
-                <!-- Sources for additional background and creating data files-->
+                <!-- Sources for additional background and creating data files and for the basemap-->
                 <p class="slide_tinytext">- tax foundation article and charts related to education level and income: <a href="https://taxfoundation.org/blog/educational-attainment-drives-level-income/" target="_blank">https://taxfoundation.org/blog/educational-attainment-drives-level-income/</a></p>
                 <p class="slide_tinytext">- geojson.io used for checking data files after cleaning: <a href="https://geojson.io/#map=2/0/20" target="_blank">https://geojson.io/#map=2/0/20</a></p>
+                <p class="slide_tinytext">- mapbox basemap (Mapbox Dark), chosen as it displays the color scheme of the maps nicely and creates a coherent appearance when combined with the panel style and color (an overall dark theme).: <a href="mapbox://styles/mapbox/dark-v10" target="_blank">mapbox://styles/mapbox/dark-v10</a></p>
             </div>
 
             <h5>AI Use Disclosure</h5>
