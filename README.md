@@ -35,6 +35,9 @@ and we wanted the data to have the same number of rows (or at least not missing 
  
 3. World Countries Generalized from ArcGIS Hub for country shapes and for merging to datasets: [https://hub.arcgis.com/datasets/esri::world-countries-generalized](https://hub.arcgis.com/datasets/esri::world-countries-generalized)
 
+The image below is of the resulting merged dataset for the year 2000 geojson file using geojson.io view
+![2000 dataset merged](/img/merged_2000_data.png)
+
 ## **Insiration and Template Projects:**
 
 ### **We used the following projects as initial inspiration for this project:**
