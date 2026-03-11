@@ -637,6 +637,8 @@ p {
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: cover;
+  /* TESTING THIS CURRENTLY: padding: 40em 0em 60em 0em; */
+
 }
 /* Style code below for "section 1" in index.html */
 #intro {
