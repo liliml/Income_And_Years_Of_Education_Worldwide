@@ -316,7 +316,7 @@ async function loadData() {
         if (index === 0) { // When enter the first scene
 
             // // two lines below are used to make the side panel show by default
-            document.getElementById("mySidepanel").style.width = "470px";
+            document.getElementById("mySidepanel").style.width = "35%";
             document.getElementById("mySidepanel").style.height = "100%";
             document.getElementById("mySidepanel").style.padding = "0px 0px 0px 0px"; //padding to left, 0px 
             
@@ -533,7 +533,7 @@ document.getElementById("reset").addEventListener("click", () => {
 function openNav() {
     ///TESTING, THIS IS THE ORGINAL LINE, TEST LINE BELOW: document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
     document.getElementById("mySidepanel").style.padding = "0px 0px 0px 0px"; //padding to left is 0px
-    document.getElementById("mySidepanel").style.width = "470px";
+    document.getElementById("mySidepanel").style.width = "30%";
 
     document.getElementById("mySidepanel").style.height = "100%";
     //line below hides nav button and makes invisible
