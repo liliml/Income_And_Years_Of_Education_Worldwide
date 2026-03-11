@@ -2,6 +2,8 @@
 //for 2014: yearsRange[14] will show 2014 data.
 let yearsRange = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
 
+
+
 //currentYear variable to be used for indexing the selectedYear array and showing the data for that year. Will start with 2000 data.
 //This variable will change as the user moves the slider to select different years and show the data for that year.
 let currentYear = yearsRange[0]; //default is show data for year 2000 when the page is loaded: yearsRange[0] so year is 2000.
@@ -169,6 +171,14 @@ function clean(v) {
     return v === -1 ? null : v;
 }
 
+
+// let response = await fetch(`assets/${currentYear}/merged_${currentYear}.geojson`); //the backticks are for string literals, have to use these to use variable name in string name
+// worldData = await response.json();
+// let test_storeschooling = worldData["features"][0]["properties"]["AVG_YR_SCH"];
+// console.log("worldData education data column after fetch:", test_storeschooling);
+//console.log(worldData);
+
+
 async function loadData() {
     //Referenced the following sources to use variables in file path, in this case to put current selected year variable into file path as year changes:
     //https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Strings
@@ -176,6 +186,9 @@ async function loadData() {
     console.log("currentYear variable before fetch:::", currentYear);
     let response = await fetch(`assets/${currentYear}/merged_${currentYear}.geojson`); //the backticks are for string literals, have to use these to use variable name in string name
     worldData = await response.json();
+
+    //let test_storeschooling = worldData["features"][0]["properties"]["AVG_YR_SCH"];
+    //console.log("worldData education data column after fetch:", test_storeschooling);
 
     map.on("load", () => {
 
@@ -401,8 +414,14 @@ map.on("click", (e) => {
         layers: ["combined-layer", "income-layer", "schooling-layer"]
     });
 
+    
+    //TODO, CURRENTLY HERE!!! make two glogal arrays at top for this, then fill them in here! See more info in this comment: make an array that sotres the folllowing: for each year of yearData array, 
+    //use features[0].properties.INCOME and  features[0].properties.AVG_YR_SCH to get the income and education data for the selected country for each year
+    console.log("features", features[0].properties.INCOME); //gets income for selected country 
+
     if (!features.length) return;
     
+
     lnglat = features[0].geometry.coordinates[0][0][0];  
     console.log("curr lnglat", lnglat);
     let props = features[0].properties;
@@ -415,6 +434,8 @@ map.on("click", (e) => {
     document.getElementById("schooling").innerHTML = schooling === null ? "No Data" : schooling;
 
     generateChart(income, schooling);
+
+
 
     // Popup at clicked point
     new mapboxgl.Popup()
