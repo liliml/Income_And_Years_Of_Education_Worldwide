@@ -534,6 +534,7 @@ function openNav() {
     ///TESTING, THIS IS THE ORGINAL LINE, TEST LINE BELOW: document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
     document.getElementById("mySidepanel").style.padding = "0px 0px 0px 0px"; //padding to left is 0px
     document.getElementById("mySidepanel").style.width = "470px";
+
     document.getElementById("mySidepanel").style.height = "100%";
     //line below hides nav button and makes invisible
     document.getElementsByClassName("openbtn")[0].style.visibility = "hidden"; //have to select first instacne of class opnbutton since is an array (there can be multiple opnbutton elemnts with that class name)

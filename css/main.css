@@ -776,12 +776,20 @@ p {
     }
 
     @media (max-width:991px) {
+      /* html, body {
+        transform: scale(0.1);
+      } */
+
       .site-footer [class^=col-] {
         margin-bottom: 30px
       }
     }
 
     @media (max-width:767px) {
+      /* html, body {
+        transform: scale(0.1);
+      } */
+      
       .site-footer {
         padding-bottom: 0
       }
