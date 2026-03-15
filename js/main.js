@@ -2,8 +2,6 @@
 //for 2014: yearsRange[14] will show 2014 data.
 let yearsRange = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
 
-
-
 //currentYear variable to be used for indexing the selectedYear array and showing the data for that year. Will start with 2000 data.
 //This variable will change as the user moves the slider to select different years and show the data for that year.
 let currentYear = yearsRange[0]; //default is show data for year 2000 when the page is loaded: yearsRange[0] so year is 2000.
@@ -14,14 +12,10 @@ let lnglat = null; //global var for long lat alter
 //Function for year selected on time slider
 function filterBy(yearPassedIn) { //NOTE: yearPassedIn is a parameter, and is a year, can be currentYear, 
 //but can change, later see filterBy function call and updating the slider and such in the code
-    console.log("current year parameter passed in:", yearPassedIn);
-    // Set the label to show current selected year for title for slider (see largeTextSliderValue id in index.html in the slider div)
-    // document.getElementById('largeTextSliderValue').innerHTML = yearPassedIn;
     // Set the label to show current selected year (see yearSliderValue id in index.html in the slider div)
     document.getElementById('yearSliderValue').innerHTML = yearPassedIn;
     document.getElementById('title').innerHTML = `Global Income & Schooling (${yearPassedIn})`; //update title in side panel to show textoftitle + (current year here)
 }
-
 
 // Declare the maps, script panels, and different thematic layers.
 let scriptPanel = scrollama();
@@ -31,7 +25,6 @@ history.scrollRestoration = "manual"; // make sure the geo-narrative will be scr
 window.scrollTo(0, 0); // scroll the geo-narrative to the coverpage
 adjustStoryboardlSize(); // force a browser window resize.
 window.addEventListener("resize", adjustStoryboardlSize); // ask the browser window listen to the resize event, thereby force a viewport resize whenever adjusting the window size.
-
 
 // Define Generic window resize listener event
 function adjustStoryboardlSize() {
@@ -58,12 +51,12 @@ function adjustStoryboardlSize() {
 // assign the access token
 mapboxgl.accessToken = 'pk.eyJ1IjoieWowNTA1IiwiYSI6ImNtaGVhZm13NzBiZHAyaXBwNnVia3kyY3YifQ.JDOB2t61C-q1Qo7WLT7DDw';
 
-
 // declare the map object
 let map = new mapboxgl.Map({
+    projection:"globe",
     container: 'map', // container ID
     style: 'mapbox://styles/mapbox/dark-v10',
-    zoom: 1.2, // starting zoom
+    zoom: 2.5, // starting zoom
     scrollZoom: false,
     minZoom: 1,
     center: [0, 20] // starting center
@@ -87,36 +80,14 @@ const combinedataColors = ['#005eff','#0a0079','#ff00d9','#00ffbb','#ffd000','#f
 // create the legend object and anchor it to the html element with id legend.
 const legend = document.getElementById('legend');
 
-
-
-
-//TESTING AREA FOR LEGEND    
+//function to update legend
 function updateLegend(type) {
     if (type == "combinedata") {
         document.getElementById("legend").style.visibility = "hidden";
     } else {
         let breaks = type === "income" ? incomeBreaks : schoolingBreaks;
-        let colors = type === "income" ? incomeColors : schoolingColors;
-    
+        let colors = type === "income" ? incomeColors : schoolingColors; 
         let labels = [`<strong>${type === "income" ? "Avg Yearly Income (USD)" : "Avg Years Schooling"}</strong>`];
-        
-        console.log("breaks array:", breaks);
-
-        // breaks.forEach((break_value, i) => { //break value is one of the breaks aka ranges of values in the legend key
-        //     console.log("break value:", break_value);
-        //     console.log("color value:", colors[i]);
-        //     const color = colors[i];
-        //     const item = document.createElement('div');
-        //     const key = document.createElement('span');
-        //     key.className = 'legend-key';
-        //     key.style.backgroundColor = color;
-        
-        //     const value = document.createElement('span');
-        //     value.innerHTML = `${break_value}`;
-        //     item.appendChild(key);
-        //     item.appendChild(value);
-        //     legend.innerHTML += legend.appendChild(item);
-        // });
 
         for (let i = 0; i < breaks.length - 1; i++) {
             labels.push(
@@ -127,70 +98,32 @@ function updateLegend(type) {
                 </div>`   
             );
         }
-
-        // for (let i = 0; i < breaks.length - 1; i++) {
-        //     labels.push(`
-        //         <p class="break">
-        //             <span class="dot" style="background:${colors[i]}; width:18px; height:18px;"></span>
-        //             <span class="dot-label">${breaks[i]} – ${breaks[i+1]}</span>
-        //         </p>
-        //     `);
-        // }
     
         legend.innerHTML = labels.join('');
     }
 }
-//TESTING AREA FOR LEGEND
-
-
-
-
-// function updateLegend(type) {
-//     if (type == "combinedata") {
-//         document.getElementById("legend").style.visibility = "hidden";
-//     } else {
-//         let breaks = type === "income" ? incomeBreaks : schoolingBreaks;
-//         let colors = type === "income" ? incomeColors : schoolingColors;
-    
-//         let labels = [`<strong>${type === "income" ? "Avg Yearly Income (USD)" : "Avg Years Schooling"}</strong>`];
-    
-//         for (let i = 0; i < breaks.length - 1; i++) {
-//             labels.push(`
-//                 <p class="break">
-//                     <span class="dot" style="background:${colors[i]}; width:18px; height:18px;"></span>
-//                     <span class="dot-label">${breaks[i]} – ${breaks[i+1]}</span>
-//                 </p>
-//             `);
-//         }
-    
-//         legend.innerHTML = labels.join('');
-//     }
-// }
 
 function clean(v) {
     return v === -1 ? null : v;
 }
 
-
-// let response = await fetch(`assets/${currentYear}/merged_${currentYear}.geojson`); //the backticks are for string literals, have to use these to use variable name in string name
-// worldData = await response.json();
-// let test_storeschooling = worldData["features"][0]["properties"]["AVG_YR_SCH"];
-// console.log("worldData education data column after fetch:", test_storeschooling);
-//console.log(worldData);
-
-
 async function loadData() {
+    //NOTE: code in the 2 lines below is for the combined data tab, while the other code below before map.on is for the education and income tabs. See code later for futher explaination
     //Referenced the following sources to use variables in file path, in this case to put current selected year variable into file path as year changes:
     //https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Strings
     //https://stackoverflow.com/questions/3304014/how-to-interpolate-variables-in-strings-in-javascript-without-concatenation
-    console.log("currentYear variable before fetch:::", currentYear);
     let response = await fetch(`assets/${currentYear}/merged_${currentYear}.geojson`); //the backticks are for string literals, have to use these to use variable name in string name
     worldData = await response.json();
 
-    //let test_storeschooling = worldData["features"][0]["properties"]["AVG_YR_SCH"];
-    //console.log("worldData education data column after fetch:", test_storeschooling);
-
     map.on("load", () => {
+        //Referenced for globe map and for setting background appearence of map: https://docs.mapbox.com/mapbox-gl-js/guides/globe/
+        map.setFog({
+            color: 'rgb(186, 210, 235)', // Lower atmosphere
+            'high-color': 'rgb(36, 92, 223)', // Upper atmosphere
+            'horizon-blend': 0.02, // Atmosphere thickness (default 0.2 at low zooms)
+            'space-color': 'rgb(11, 11, 25)', // Background color
+            'star-intensity': 0.6 // Background star brightness (default 0.35 at low zoooms )
+        });
 
         map.addSource("world", {
             type: "geojson",
@@ -274,7 +207,6 @@ async function loadData() {
             }
         });
 
-
         // filterBy function used to cahnge year value to show different data
         // Set filter to year 2000 (0 is an index, here it is 0 and is year 2000). 
         // Am using currentYear variable here, is set to index 0 aka year 2000, see code at top of this file
@@ -283,9 +215,6 @@ async function loadData() {
         document.getElementById('slider').addEventListener('input', (e) => { 
             let currSelYear = parseInt(e.target.value, 10); //create currSelYear variable which gets timeslider value of the year. 10 in this case means use base 10
             //to understand line above and parseInt function, used this reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
-            console.log("currentYear value from line above in code:", currSelYear);
-            console.log("currSelYear value:", currSelYear);
-            console.log("currentYear variable type:", typeof currSelYear);
             currentYear = yearsRange[yearsRange.indexOf(currSelYear)] //update currentYear variable to be the index of the selected year, so that it can be used in the filterBy function to show the data for that year. 
             // indexOf function gets index of the selected year from yearsRange array. 
             // Referenced this source for indexOf function: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
@@ -295,21 +224,84 @@ async function loadData() {
             //https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
             //https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data
             map.getSource('world').setData(`assets/${currentYear}/merged_${currentYear}.geojson`); //update the map source of 'world' to show the data for the selected year.
-
             filterBy(currSelYear);
-
-            console.log("lnglat", lnglat);
-            console.log("lng", lnglat[0]);
-            console.log("lat", lnglat[1])
             if (lnglat != null) {
                 lng = lnglat[0];
                 lat = lnglat[1];
-            map.fire("click", {point: map.project([lng, lat]), lngLat: lng, lat});
+                map.fire("click", {point: map.project([lng, lat]), lngLat: lng, lat});
             }
 
         });
         updateLegend("combinedata");
     });
+
+    //FOR CONTEXT FOR DATASETS BELOW AND WHY USE OF REDUNDANT LOOKING CODE AND MANY DATASETS, SEE map.on(click.. function in code later below outside of this function
+    //Load in all the datasets for later for showing all the income and education data for those tabs over the years for a selected country. There is one datset per each year from 2000 to 2021
+    let response_2000 = await fetch(`assets/2000/merged_2000.geojson`); 
+    worldData_2000 = await response_2000.json();
+    
+    let response_2001 = await fetch(`assets/2001/merged_2001.geojson`); 
+    worldData_2001 = await response_2001.json();
+    
+    let response_2002 = await fetch(`assets/2002/merged_2002.geojson`); 
+    worldData_2002 = await response_2002.json();
+    
+    let response_2003 = await fetch(`assets/2003/merged_2003.geojson`); 
+    worldData_2003 = await response_2003.json();
+    
+    let response_2004 = await fetch(`assets/2004/merged_2004.geojson`); 
+    worldData_2004 = await response_2004.json();
+    
+    let response_2005 = await fetch(`assets/2005/merged_2005.geojson`); 
+    worldData_2005 = await response_2005.json();
+    
+    let response_2006 = await fetch(`assets/2006/merged_2006.geojson`); 
+    worldData_2006 = await response_2006.json();
+    
+    let response_2007 = await fetch(`assets/2007/merged_2007.geojson`); 
+    worldData_2007 = await response_2007.json();
+    
+    let response_2008 = await fetch(`assets/2008/merged_2008.geojson`); 
+    worldData_2008 = await response_2008.json();
+    
+    let response_2009 = await fetch(`assets/2009/merged_2009.geojson`); 
+    worldData_2009 = await response_2009.json();
+    
+    let response_2010 = await fetch(`assets/2010/merged_2010.geojson`); 
+    worldData_2010 = await response_2010.json();
+
+    let response_2011 = await fetch(`assets/2011/merged_2011.geojson`); 
+    worldData_2011 = await response_2011.json();
+
+    let response_2012 = await fetch(`assets/2012/merged_2012.geojson`); 
+    worldData_2012 = await response_2012.json();
+
+    let response_2013 = await fetch(`assets/2013/merged_2013.geojson`); 
+    worldData_2013 = await response_2013.json();
+
+    let response_2014 = await fetch(`assets/2014/merged_2014.geojson`); 
+    worldData_2014 = await response_2014.json();
+
+    let response_2015 = await fetch(`assets/2015/merged_2015.geojson`); 
+    worldData_2015 = await response_2015.json();
+
+    let response_2016 = await fetch(`assets/2016/merged_2016.geojson`); 
+    worldData_2016 = await response_2016.json();
+
+    let response_2017 = await fetch(`assets/2017/merged_2017.geojson`); 
+    worldData_2017 = await response_2017.json();
+
+    let response_2018 = await fetch(`assets/2018/merged_2018.geojson`); 
+    worldData_2018 = await response_2018.json();
+
+    let response_2019 = await fetch(`assets/2019/merged_2019.geojson`); 
+    worldData_2019 = await response_2019.json();
+
+    let response_2020 = await fetch(`assets/2020/merged_2020.geojson`); 
+    worldData_2020 = await response_2020.json();
+
+    let response_2021 = await fetch(`assets/2021/merged_2021.geojson`); 
+    worldData_2021 = await response_2021.json();
 
     // Initialize the script panel
     //Referenced this source make side panel appear faster editing offset property value, adding the easing property, and adding the animate property to make the side panel appear and disappear smoother: https://docs.mapbox.com/mapbox-gl-js/api/properties/
@@ -353,18 +345,17 @@ async function loadData() {
         if (index === 0) { //NOTE: "getLayer" uses the MAP ID FROM THE map.addlayer FUNCTION!!!
             //makes map reappear as needed when scrolling up and down to and past map scene
             if (response.direction == 'down') { 
-            document.getElementById("cover").style.visibility = "visible"; // when you scroll down, the cover page will be hided.
-            document.getElementById("mySidepanel").style.visibility = "hidden"; //hide side panel
+                document.getElementById("cover").style.visibility = "visible"; // when you scroll down, the cover page will be hided.
+                document.getElementById("mySidepanel").style.visibility = "hidden"; //hide side panel
             } else if (response.direction == 'up') {
-            document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
-            document.getElementById("mySidepanel").style.visibility = "hidden"; //hide side panel
+                document.getElementById("cover").style.visibility = "visible"; // when you scroll up, the cover page will be shown.
+                document.getElementById("mySidepanel").style.visibility = "hidden"; //hide side panel
             } 
         } 
     }
 }
 
 loadData();
-
 
 //Referenced this sources for code to add and remove classes from "buttons": https://stackoverflow.com/questions/507138/how-to-add-a-class-to-an-html-element-with-javascript
 //for button element ids "btn-combined", "btn-income", "btn-schooling"  
@@ -408,34 +399,70 @@ document.getElementById("btn-income").addEventListener("click", () => {
     document.getElementById("btn-income").classList.add("active");
 });
 
+features = null; //update global variable here for features
+
 //click function for when you click on a country and a pop up appears + call chart function to show chart data
 map.on("click", (e) => {
     let features = map.queryRenderedFeatures(e.point, {
         layers: ["combined-layer", "income-layer", "schooling-layer"]
     });
 
+    //Is for education and schooling layer and is prep work for the charts to make sure the charts show one column for each year of data, with the data being shown depending on the country selected
+    //1. create a variable that is declared by getting current selected country name and store into a variable (use features.properties, specifically features[0].properties["COUNTRY"])
+    let curr_sel_country_name = features[0].properties["COUNTRY"] //variable for currently selected country name
     
-    //TODO, CURRENTLY HERE!!! make two glogal arrays at top for this, then fill them in here! See more info in this comment: make an array that sotres the folllowing: for each year of yearData array, 
-    //use features[0].properties.INCOME and  features[0].properties.AVG_YR_SCH to get the income and education data for the selected country for each year
-    console.log("features", features[0].properties.INCOME); //gets income for selected country 
-
+    //2. create two empty arrays that will each eventually be 21 items long since there is 21 years: one for education data for the selected country ("education_allyears_data_sel_country"), 
+    //and one for income data for the selected country ("income_allyears_data_sel_country")
+    let education_allyears_data_sel_country = []
+    let income_allyears_data_sel_country = []
+    
+    //3. for each (use for each loop that goes thorugh yearsRange array) year:
+        //first get merged_CURRYEAR.geojson file under /assets/CURRYEAR. Do this with the following but create different variables that are not called "response" and "worldData" and do so in the loadData function, yes this does mean several repeated lines of code: 
+        //and also create an array that contains each of these "datasets" such as worldData_2000 for the year 2000. See code in two comments below for how to do the response and worlddata thing, see loadData function for actual variables
+        //let response = await fetch(`assets/${currentYear}/merged_${currentYear}.geojson`); //the backticks are for string literals, have to use these to use variable name in string name
+        //worldData = await response.json();
+        //second get variable that is the row with index that matches same name as "current selected country" and store this into a varible (lets call it "country_datarow" for now), 
+        //third index into this variable which might be an array or a dictionary and first use a print statement to view this "row", 
+        //fourth do two indexings: 
+            //- first attempt to index through and get the index number as in arrayname[#] that has the INCOME value and use education_allyears_data_sel_country.push(VALUE FOUND IN THIS STEP) to add the value to the array
+            //- second attempt to index through and get the index number as in arrayname[#] that has the AVG_YR_SCH value and use income_allyears_data_sel_country.push(VALUE FOUND IN THIS STEP) to add the value to the array
+    
+    //array below contains each of the "datasets" such as worldData_2000 for the year 2000, these datasets are created in the loadData function as need the "await" function which only can occur there
+    let worldData_array = [worldData_2000, worldData_2001, worldData_2002, worldData_2003, worldData_2004, worldData_2005, worldData_2006, worldData_2007, worldData_2008, worldData_2009, worldData_2010, worldData_2011, worldData_2012, worldData_2013, worldData_2014, worldData_2015, worldData_2016, worldData_2017, worldData_2018, worldData_2019, worldData_2020, worldData_2021] 
+    for (let curr_year_in_yearsRange = 0; curr_year_in_yearsRange <= 21; curr_year_in_yearsRange++) { //has to be equal to 20 to fix off by 1 error and for indexing
+        curr_dataset = worldData_array[curr_year_in_yearsRange]
+        //NOTE: worldData_array[curr_year_in_yearsRange] is the "current dataset", is similar to worldData, but is a specific dataset from the array worldData_array retrieved by index
+        //Referenced this source to index through dictionaries: https://stackoverflow.com/questions/3337367/checking-length-of-dictionary-object
+        //for each row in worldData.features output, do this by legnth of worldData.features
+        //if worldData.features[curr index in loop] == curr_sel_country_name
+            //add to array worldData.features[curr index in loop].properties["AVG_YR_SCH"] //get row index, then index into the row and get the AVG_YR_SCH value and add it to the array
+        for (let i = 0; i <= Object.keys(curr_dataset.features).length; i++) {
+            if (curr_dataset.features[i].properties["COUNTRY"] == curr_sel_country_name) {
+                education_allyears_data_sel_country.push(curr_dataset.features[i].properties["AVG_YR_SCH"])
+                income_allyears_data_sel_country.push(curr_dataset.features[i].properties["INCOME"])
+                break; //used to break out of inner loop if match is found, is necessary or fails to show multiple years of data as loop does not break otherwise as it needs to
+            } 
+        }
+    }    
     if (!features.length) return;
     
-
     lnglat = features[0].geometry.coordinates[0][0][0];  
     console.log("curr lnglat", lnglat);
     let props = features[0].properties;
-
+    
     let income = clean(parseFloat(props.INCOME));
     let schooling = clean(parseFloat(props.AVG_YR_SCH));
-
+    
     document.getElementById("country-name").innerHTML = props.COUNTRY;
     document.getElementById("income").innerHTML = income === null ? "No Data" : income.toLocaleString();
     document.getElementById("schooling").innerHTML = schooling === null ? "No Data" : schooling;
-
-    generateChart(income, schooling);
-
-
+    
+    //4. Send the array values to the generateFunction function and call the function passing those two arrays in (see previous steps 1-3 in code section above)      
+    if (activeLayer == "combinedata") { //for combined data layer, don't need to pass in 
+        generateChart(income, schooling);
+    } else { //for income or education (aka schooling) layer, pass in the two arrays created earlier (education_allyears_data_sel_country and income_allyears_data_sel_country accordingly for education and income) 
+        generateChart(income_allyears_data_sel_country, education_allyears_data_sel_country) //here instead of income, schooling, we pass in the appropriate arrays for income data for all years for the selected country and same for the education data
+    }
 
     // Popup at clicked point
     new mapboxgl.Popup()
@@ -445,11 +472,10 @@ map.on("click", (e) => {
             Income: ${income === null ? "No Data" : income.toLocaleString()}<br>
             Schooling: ${schooling === null ? "No Data" : schooling}
         `)
-        .addTo(map);
-    
-    //Referenced the following sources to update the map according to the year selected:
-    //https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
-    //https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data
+        .addTo(map);    
+        //Referenced the following sources to update the map according to the year selected:
+        //https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
+        //https://stackoverflow.com/questions/63963704/refreshing-a-source-in-order-to-update-the-visualized-data
         map.getSource('world').setData(`assets/${currentYear}/merged_${currentYear}.geojson`); //update the map source of 'world' to show the data for the selected year.
 });
 
@@ -472,7 +498,6 @@ function generateChart(income, schooling) {
             },
             tooltip: {
                 format: {
-                    
                     value: function (value) {
                         return value === 0 ? "No Data" : value;
                     }
@@ -484,41 +509,40 @@ function generateChart(income, schooling) {
         });
     } else if (activeLayer == "schooling") { //second case for education data
         if (chart) chart.destroy();
-
         chart = c3.generate({
             bindto: "#chart",
             data: {
-                columns: [
-                    ["Schooling (Avg Years)", schooling || 0]
+                columns: [ 
+                    ["Schooling"].concat(schooling) //is Schooling, year, year, year, etc (is concating to an array and is formatting of how columns parameter works)
                 ],
                 type: "bar",
                 colors: {
-                    "Schooling (Avg Years)": "#2ca25f"
+                    "Schooling": "#2ca25f"
                 }
             },
             tooltip: {
                 format: {
-                    value: function (value) {
+                    value: function (value) { //"value" parameter is the value for that year of data
                         return value === 0 ? "No Data" : value;
                     }
                 }
             },
             axis: {
-                x: { type: "category", categories: [""] }
+                x: { type: "category", categories: yearsRange, label: "Years" }, //yearsRange is the "x axis" label and is the years 2000 to 2021 array
+                y: {type: 'linear', label: 'Avg Yaers of Educ'}
             }
         });
     } else { //third case for income data
         if (chart) chart.destroy();
-
         chart = c3.generate({
             bindto: "#chart",
             data: {
                 columns: [
-                    ["Income", income || 0]
+                    ["Income"].concat(income)
                 ],
                 type: "bar",
                 colors: {
-                    Income: "#54278f",
+                    "Income": "#54278f",
                 }
             },
             tooltip: {
@@ -529,17 +553,12 @@ function generateChart(income, schooling) {
                 }
             },
             axis: {
-                x: { type: "category", categories: [""] }
+                x: { type: "category", categories: yearsRange, label: "Years" }
+                , y: {type: 'linear', label: 'Income (USD)'}
             }
         });    
-    }
-    
-
-    
-
-    
+    }    
 }
-
 
 document.getElementById("reset").addEventListener("click", () => {
     map.flyTo({ zoom: 1.2, center: [0, 20] });
@@ -552,14 +571,11 @@ document.getElementById("reset").addEventListener("click", () => {
 
 // Set the width and heigh of the sidebar (show it) 
 function openNav() {
-    ///TESTING, THIS IS THE ORGINAL LINE, TEST LINE BELOW: document.getElementById("mySidepanel").style.padding = "0px 0px 0px 20px"; //padding to left, 20px 
     document.getElementById("mySidepanel").style.padding = "0px 0px 0px 0px"; //padding to left is 0px
     document.getElementById("mySidepanel").style.width = "30%";
-
     document.getElementById("mySidepanel").style.height = "100%";
     //line below hides nav button and makes invisible
     document.getElementsByClassName("openbtn")[0].style.visibility = "hidden"; //have to select first instacne of class opnbutton since is an array (there can be multiple opnbutton elemnts with that class name)
-
 }
 
 // Set the width of the sidebar to 0 (hide it)
