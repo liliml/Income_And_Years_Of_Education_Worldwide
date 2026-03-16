@@ -532,7 +532,7 @@ function generateChart(avg_schooling, avg_income, avg_relative_to_world, income,
                 colors: {
                     "Avg Global Schooling":  "#845f00",
                     "Avg Global Income":  "#1100ff",
-                    "schooling income percentages relative to global average":  "#ffdd00",
+                    "Schooling income percentages relative to global average":  "#ffdd00",
                     "Income ($1000)": "#54278f",
                     "Schooling (Avg Years)": "#2ca25f"
                 }
