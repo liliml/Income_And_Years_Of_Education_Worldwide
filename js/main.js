@@ -524,7 +524,7 @@ function generateChart(avg_schooling, avg_income, avg_relative_to_world, income,
                 columns: [
                     ["Avg Global Schooling", avg_schooling],
                     ["Avg Global Income ($1000)", avg_income / 1000 || 0],
-                    ["schooling income percentages relative to global average", avg_relative_to_world],
+                    ["Schooling income percentages relative to global average", avg_relative_to_world],
                     ["Income ($1000)", income / 1000 || 0], //divide by 1000 to make education more visible
                     ["Schooling (Avg Years)", schooling || 0]
                 ],
