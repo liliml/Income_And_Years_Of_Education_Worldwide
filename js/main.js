@@ -473,9 +473,6 @@ map.on("click", (e) => {
             }
         }
         average_global_schoolingyears = average_global_schoolingyears / worldData.features.length; //should be divided by 252, but am using .features.length here, there is 252 countries
-        console.log("avg global education:", average_global_schoolingyears)
-        console.log("schooling curr country:", schooling)
-
 
         //2. to find avg income amount for current year (current year data is called worldData)
         for (let i = 0; i <= worldData.features.length - 1; i++) { //Missing a coountry for some reason so added a -1?
@@ -487,20 +484,14 @@ map.on("click", (e) => {
             }
         }
         average_global_income = average_global_income / worldData.features.length; //should be divided by 252, but am using .features.length here, there is 252 countries
-        console.log("avg global income:", average_global_income)
-        console.log("income curr country:", income)
-
 
         //3. Find average between (current country education/schooling value / global avg income) + (current country income value / global avg income)
         if (schooling == -1) { //is for if schooling value is -1, in that case assign 0 for schooling / average_global_schoolingyears
             avg_between_schooling_educ_and_curr_country_data = ((0) + (income / average_global_income)) / 2; //find average between (current country education/schooling value / global avg income) + (current country income value / global avg income)
-            console.log("master avg FOR CURR SCHOOLING -1:::", avg_between_schooling_educ_and_curr_country_data)
         } else if (income == -1) { //is for if income value is -1, in that case assign 0 for income / average_global_income
             avg_between_schooling_educ_and_curr_country_data = ((schooling / average_global_schoolingyears) + (0)) / 2; //find average between (current country education/schooling value / global avg income) + (current country income value / global avg income)
-            console.log("master avg FOR CURR INCOME -1:::", avg_between_schooling_educ_and_curr_country_data)
         } else { //normal case for when there is no missing data for current education or income for the current country
             avg_between_schooling_educ_and_curr_country_data = ((schooling / average_global_schoolingyears) + (income / average_global_income)) / 2; //find average between (current country education/schooling value / global avg income) + (current country income value / global avg income)
-            console.log("master avg:::", avg_between_schooling_educ_and_curr_country_data)
         }
         generateChart(average_global_schoolingyears, average_global_income, avg_between_schooling_educ_and_curr_country_data, income, schooling); //pass in five parameters: average years of schooling (average_global_schoolingyears), and avg global income for all countries (average_global_income) for current year (currentYear), the average between the two and the current country, as well as "income" and "schooling" parameters
 
